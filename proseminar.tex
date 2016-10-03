@@ -144,16 +144,16 @@ Schritt & Idle-Zeit & 1. Prozessor & 2. Prozessor \\
 
 Investiert man in die Aufgabe etwas Denkarbeit wird auch klar, dass wohl die optimale Politik w"are, wenn wir grunds"atzlich mit den l"angsten Jobs beginnen und am Schluss die k"urzesten Jobs legen. Warum? Weil wir bei jedem Schritt die Aufgabe grunds"atzlich nur auf den Prozessor legen, der gerade frei ist. Wir versuchen also bereits dadurch die beiden Balken auszugleichen. Je sp"ater wir eine l"angere Aufgabe auf einen Prozessor legen, desto unwahrscheinlicher k"onnen wir diesen mit den restlichen Jobs wieder ausgleichen.
 
-\subsection{Erster Beweisschritt: Vergleichen von zwei Politiken}
+\subsection{Erster Beweisschritt: Vergleich zweier Politiken}
 
 Sei im weiteren Verlauf zum Zeitpunkt 0 ein Job 0 bereits im Prozessor, d.h. starte jede Politik mit Job 0 (dies macht den Beweis etwas klarer).
 
 Als n"achstes wird gezeigt, dass eine Politik die in aufsteigender Reihenfolge der \(u_{i}\) (also der absteigenden Zeiten) angeordnet ist, optimal ist. Dazu betrachten wir zwei nahezu gleiche Politiken, bei der Job 1 und Job 2 miteinander vertauscht sind und beweisen dann induktiv:
 
 \textbf{Lemma 1:} Seien zwei Politiken \(\pi\) und \(\bar \pi\) gegeben:
-\begin{displaymath}\pi = (0,2,1,3,\ldots,n)\end{displaymath} 
-\begin{displaymath}\bar \pi = (0, 1,2,3,\ldots,n)\end{displaymath} 
-Gelte au"serdem, dass \(u_{1} = min(u_{k \ge 1})\) dann gilt:
+\begin{displaymath}\pi = (0,2,1, i_{3}, i_{4},\ldots,i_{n})\end{displaymath} 
+\begin{displaymath}\bar \pi = (0, 1,2,i_{3}, i_{4},\ldots,i_{n})\end{displaymath} 
+Gelte au"serdem, dass \(u_{1} = min_{k \ge 1}(u_{k})\), dann gilt:
 \begin{displaymath}E_{\bar \pi}(D)\le E_{\pi}(D)\end{displaymath}.
 
 
@@ -161,22 +161,27 @@ Gelte au"serdem, dass \(u_{1} = min(u_{k \ge 1})\) dann gilt:
 
 \begin{displaymath}p_{0} = \bar p_{0} = P(X_{0} > \sum_{j=1}^{n} X_{j})\end{displaymath} ist klar. Der erste Job entspricht der Wahrscheinlichkeit, dass \(X_{0}\) gr"osser ist als alle anderen zusammengenommen, da \(p_{0}\) ja jeweils der erste Job in beiden Politiken \(\pi\) und \(\bar \pi\) ist.
 
-Wir wollen nun durch Induktion zeigen, dass \begin{equation}\label{e32}\bar p_{1} \le p_{1}, \qquad \bar p_{j} \ge p_{j}, \qquad  j=2,\ldots,n\end{equation}.
+Wir wollen nun durch Induktion zeigen, dass \begin{equation}\label{e32}\bar p_{1} \le p_{1}, \qquad \bar p_{j} \ge p_{j}, \qquad  j=2,\ldots,n\end{equation}
 
-\textbf{Induktionsanfang:} F"ur n = 1 f"allt \(\bar p_{j} \ge p_{j}\) f"ur j = 2,\ldots,n sowieso weg, da \(n < 2\) und \(\bar p_{1} \le p_{1}\) gilt nach der Voraussetzung \(u_{1}\) = min(\(u_{k \ge 1}\)), da \(\pi\) an der Stelle 1 \(u_{1}\) stehen hat und \(\bar \pi\) dagegen \(u_{2}\).
+\textbf{Induktionsanfang:} F"ur n = 1 f"allt \(\bar p_{j} \ge p_{j}\) f"ur j = 2,\ldots,n sowieso weg, da \(n < 2\) und \(\bar p_{1} \le p_{1}\) gilt nach der Voraussetzung \(u_{1}\) = \(min_{k \ge 1}(u_{k})\), da \(\pi\) an der Stelle 1 \(u_{1}\) stehen hat und \(\bar \pi\) dagegen \(u_{2}\).
 
-\textbf{Induktionsvoraussetzung:} Es gelte also die Behauptung (\ref{e32}) f"ur den Fall, dass nur n-1 Jobs (zus"atzlich zu Job 0) vorliegen.
-
-\textbf{Induktionsschluss:} Seien nun diesmal (n-1)+1 = n Jobs zu erledigen und seien \( p_{j}^{*}\) und \(\bar p_{j}^{*}\) (wieder zugeh"orig zu \(\pi\) und \(\bar\pi\), j=1,\ldots,n-1) die Wahrscheinlichkeiten, dass Job j der letzte der Jobs 0,\ldots,n-1 f"ur die jeweilige Politik ist.
-Nach Induktionsvoraussetzung gilt (vgl. (\ref{e32})), dass dann
-
+\textbf{Induktionsvoraussetzung:} Es gelte also die Behauptung (\ref{e32}) f"ur den Fall, dass nur n-1 Jobs (zus"atzlich zu Job 0) vorliegen und somit:
 \begin{equation}\label{e33}\bar p_{1}^{*} \le  p_{1}^{*}, \qquad \bar p_{j}^{*} \ge  p_{j}^{*}, \qquad  j=2,\ldots,n-1\end{equation}
 
-Bringt man nun die anfangs erw"ahnte Ged"achtnislosigkeit ins Spiel k"onnen wir nun leicht die Induktion fortsetzen. Nach der in diesem Fall vorliegenden Ged"achtnislosigkeit herrschen zu Beginn des letzten Jobs die selben Bedingungen als w"are dies der erste Job und ein Job 0 bereits im Prozessor. Die Laenge von Job 0 entspricht hierbei der verbleibenden Zeit von Job j. Wir m"ussen nun also nur die zwei Jobs vergleichen und mit der Wahrscheinlichkeit multiplizieren, dass Job j der letzte Job f"ur den Fall n-1 ist:
+\textbf{Induktionsschluss:} Seien nun diesmal (n-1)+1 = n Jobs zu erledigen und seien \( p_{j}^{*}\) und \(\bar p_{j}^{*}\) (wieder zugeh"orig zu \(\pi\) und \(\bar\pi\), j=1,\ldots,n-1) die Wahrscheinlichkeiten, dass Job j der letzte der Jobs 0,\ldots,n-1 f"ur die jeweilige Politik ist.
+Da die Jobs unab"angig sind, k"onnen wir zur Betrachtung des letzten Jobs alle vorherigen abgeschlossenen Jobs ignorieren, diese haben keine Auswirkung auf die Bearbeitungszeit f"ur den letzten Job. Allerdings liegt unter Umst"anden auf dem anderen Prozessor noch ein letzter Job n der zu Beginn des letzten Jobs noch nicht abgeschlossen ist. Nach der Ged"achtnislosigkeit l"auft dieser Job n noch \(X_n\) Zeiteinheiten obwohl er schon einige Zeit gelaufen ist.
+Daraus folgt, dass die Wahrscheinlichkeit, dass Job j und nicht Job n der letzte bearbeitete Job ist, P(\(X_{j} > X_{n}\)) entspricht:
 
-\begin{displaymath}p_{j} =  p_{j}^{*} \frac{u_{n}}{u_{n} + u_{j}}, \qquad \bar p_{j} = \bar p_{j}^{*} \frac{u_{n}}{u_{n} + u_{j}}, \qquad j = 1,\ldots,n-1\end{displaymath}
+\begin{displaymath}P(X_{j} > X_{n}) = P(X_{n} < x | X_{j} = x) = \int_{0}^{\infty}(1 - e^{-\lambda_{n}x})\lambda_{j}e^{-\lambda_{n}x} dy\end{displaymath}
+\begin{displaymath}= \int_{0}^{\infty} (\lambda_{j}e^{-\lambda_{j}x} - \lambda_{j}e^{(-\lambda_{n}-\lambda_{j})x})dy = [-e^{-\lambda_{j}x} + \frac{\lambda_{j}}{\lambda_{j}+\lambda_{n}} e^{(-\lambda_{n} - \lambda_{j})x}]_{0}^{\infty}\end{displaymath}
+\begin{displaymath}= 1 - \frac{\lambda_{j}} {\lambda_{j} + \lambda_{n}} = \frac{ \frac{1}{u_{n}} }{ \frac{1}{u_{j} } + \frac{1}{u_{n}}} = \frac{u_{n}}{u_{j} + u_{n}}\end{displaymath}
 
-\(\frac{u_{n}}{u_{n}+u_{j}}\) entspricht hier genau dem Fall f"ur zwei Jobs, also max(\(X_{j}\), \(X_{n}\)).
+Da diese Wahrscheinlichkeit unabh"angig von der Wahrscheinlichkeit ist, dass j der letzte Job ist im Fall mit insgesamt (n-1) Jobs ist, k"onnen wir die Gesamtwahrscheinlichkeit durch einfache Multiplikation berechnen:
+
+\begin{displaymath}p_{j} =  p_{j}^{*} P(X_{j} > X_{n}) = p_{j}^{*} \frac{u_{n}}{u_{n} + u_{j}}, \qquad \bar p_{j} = \bar p_{j}^{*} P(X_{j} > X_{n}) = \bar p_{j}^{*} \frac{u_{n}}{u_{n} + u_{j}}, \qquad j = 1,\ldots,n-1\end{displaymath}
+
+Daraus und aus (\ref{e33}) folgt, dass
+\begin{equation}\label{e34}\bar p_{1} \le p_{1}, \qquad \bar p_{j} \ge p_{j}, \qquad j=2,\ldots,n-1\end{equation}
 
 %\begin{figure}[h]
 %\includegraphics[scale=0.5]{gedlosigkeitabschneiden.png}
@@ -186,57 +191,63 @@ Bringt man nun die anfangs erw"ahnte Ged"achtnislosigkeit ins Spiel k"onnen wir 
 %|||||||||| (n-4) ||||||||| (n-2) ||| (n-1) ||||||||||| (n)
 %|||||||||||||||||| (n-3) ||||||||||||||||||| (j = n-2)
 
-Kennen wir alle Wahrscheinlichkeiten \(p_{0}\) bis \(p_{n-1}\) kennen wir auch \(p_{n}\), da egal welche Politik wir w"ahlen \emph{auf jeden Fall} ein Job die letzte ist. Wir benutzen nun einfach die Gegenwahrscheinlichkeit \(p_{n} = 1 - \sum_{j=0}^{n} p_{j}\) TODO WARUM?
+Um nun auch \(p_{n}\) und \(\bar p_{n}\) vergleichen zu k"onnen benutzen wir die Gegenwahrscheinlichkeit und bilden die Differenz:
 
-Wir k"onnen nun rechnen: TODO UEBERPRUEFEN V.A. SUMMENZEICHEN
-
-\begin{displaymath}\bar p_{n} - p_{n} =  \sum_{j=0}^{n-1}(\bar p_{j} - p_{j}) = \sum_{j=0}^{n-1}(( p_{j}^{*} - \bar p_{j}^{*}) * \frac{u_{n}}{u_{n} + u_{j}} =\end{displaymath}
+\begin{displaymath}\bar p_{n} - p_{n} =  \sum_{j=0}^{n-1}(\bar p_{j} - p_{j}) = \sum_{j=0}^{n-1}(( p_{j}^{*} - \bar p_{j}^{*}) \frac{u_{n}}{u_{n} + u_{j}} =\end{displaymath}
 Durch Abspalten des ersten Gliedes ergibt sich:
 \begin{displaymath}=( \bar p_{1}^{*} -  p_{1}^{*}) \frac{u_{1}}{u_{1} + u_{n}} + \sum_{j=2}^{n-1} (\bar p_{j}^{*} -  p_{j}^{*}) \frac{u_{j}}{u_{j}+u_{n}} \end{displaymath}
 Dies k"onnen wir mit Hilfe von \(u_{j} \ge u_{1} \Leftrightarrow \frac{u_{j}}{u_{j} + u_{n}} \ge \frac{u_{1}}{u_{1} + u_{n}}\) absch"atzen:
 \begin{displaymath}\ge \frac{u_{1}}{u_{1}+u_{n}} \sum_{j=1}^{n-1} (\bar p_{j}^{*} -  p_{j}^{*}) = 0\end{displaymath}
 
-Es folgt also, dass \(\bar\pi \ge \pi\) und somit (\ref{e32}) gilt und wir das Lemma durch die Induktion bewiesen haben.
+Aus \(\bar p_{n} \ge p_{n}\) und (\ref{e34}) folgt nun die Behauptung (\ref{e32}) und wir haben das Lemma 1 bewiesen.
 
-\subsection{Zweiter Beweisschritt: Induktion}
 
-Wir haben jetzt also per Induktion gezeigt, dass der Erwartungswert der Zeit in der ein Prozessor still steht bei Politik \(\pi = (0,2,1,3,\ldots,n)\) mindestens so gro"s ist wie bei \(\bar \pi = (0,1,2,3,\ldots,n)\), falls \(u_{1}\) = min(\(u_{k \ge 1}\). Mit dieser Grundlage k"onnen wir nun zus"atzlich zeigen, dass \((0,1,2,\ldots,n)\) die optimale Politik ist um den Erwartungswert f"ur D zu minimieren.
 
-\textbf{Also:} Sei wieder \begin{equation}\label{asdf}u_{1} \le u_{2} \le \ldots \le u_{n}\end{equation} 
+\subsection{Zweiter Beweisschritt: allgemeiner Fall}
 
-Nehmen wir also eine neue Politik her, die nicht mit (0,1,...) beginnt, dann k"onnen wir mit dem bewiesenen Lemma 1 direkt folgern, dass diese neue Politik mehr Zeit ben"otigt als die alte. Wenn wir jetzt noch zeigen k"onnten, dass wenn Job 1 an einer beliebigen anderen Stelle k steht, die Politik besser w"are bei der die Stellen k und k-1 vertauscht sind, h"atten wir die Behauptung bewiesen:
+\textbf{Korollar 1:} Lemma 1 gilt auch f"ur beliebige Politiken der Form \(\pi = (0, 1, i_{2}, i_{3}, \ldots, i_{n})\) und \(\bar \pi = (0, i_{2}, 1, i_{3} \ldots, i_{n})\) mit \(u_{i_{2}} \ge u_{1}\).
 
-Seien also \(\pi\) und \(\bar\pi\) zwei Politiken mit der selben Reihenfolge der Jobs, wobei bei \(\pi\) an Stelle k eine 1 steht und bei \(\bar\pi\) an Stelle k-1 eine 1 steht und \(i_{k}\) von \(\bar\pi\) = \(i_{k-1}\) von \(\pi\) ist.
+\textbf{Beweis:} Da wir zum Beweis von Lemma 1 nur \(u_{j} \ge u_{1}\) benutzt haben und nicht direkt verwendet haben, dass \(i_{2} = 2\) gelten muss, gilt das Korollar 1.
 
-\begin{displaymath}\pi  = (0,i_{1},i_{2},\ldots,i_{k-2},i_{k-1},i_{k} = 1,i_{k+1},\ldots,i_{n})\end{displaymath}
-\begin{displaymath}\bar\pi = (0, i_{1}, i_{2},\ldots, i_{k-2}, i_{k-1} = 1, i_{k}, i_{k+1},\ldots, i_{n})\end{displaymath}
+\textbf{Lemma 2:} Seien zwei Politiken \(\pi\) und \(\bar \pi\) gegeben:
+\begin{displaymath}\pi  = (0,i_{1},i_{2},\ldots,i_{k-2},i_{k-1}=1,i_{k},i_{k+1},\ldots,i_{n})\end{displaymath}
+\begin{displaymath}\bar\pi = (0, i_{1}, i_{2},\ldots, i_{k-2}, i_{k}, i_{k-1}=1, i_{k+1},\ldots, i_{n})\end{displaymath}
+Gelte au"serdem, dass \(u_{1} \le u_{2} \le \ldots \le u_{n}\), dann gilt:
+\begin{displaymath}E_{\bar \pi}(D)\le E_{\pi}(D)\end{displaymath}.
 
-Wieder nach der Eigenschaft der Ged"achtnislosigkeit haben die Jobs 0 bis \(i_{k-2}\) keinen Einfluss auf die Nachfolgenden, wie auch \(i_{k-1}\) und \(i_{k}\) keinen Einfluss auf die Zeiten der nachfolgenden Jobs haben. Somit kann man diese zu einem neuen Job 0 zusammenfassen und es ergibt sich:
+\textbf{Beweis:} Da die Jobs hier wiederum unbabh"angig voneinander sind, haben Job 0 bis \(i_{k-2}\) keinen Einfluss auf die Nachfolgenden, wie auch \(i_{k-1}\) und \(i_{k}\) keinen Einfluss auf die Zeiten der nachfolgenden Jobs haben. Somit kann man diese zu einem neuen Job \(\bar 0\) zusammenfassen und es ergibt sich "aequivalente Politiken:
 
-\begin{displaymath}\pi = (0, i_{k-1}, i_{k} = 1,\ldots), \bar\pi = (0, i_{k-1} = 1, i_{k},\ldots)\end{displaymath}
-bzw.
-\begin{displaymath}\pi = (0, x, 1,\ldots), \bar\pi = (0, 1, x,\ldots)\end{displaymath}
+\begin{displaymath}\pi = (\bar 0, 1 ,i_{k}, i_{k+1}, \ldots, i_{n}), \qquad \bar\pi = (0, i_{k},1, i_{k+1}, \ldots, i_{n})\end{displaymath}
 
-In (\ref{e32}) haben wir nur (0,2,1,3,\ldots) mit (0,1,2,3,\ldots) verglichen. Es ist aber nicht entscheidend, ob beim Beweis die zweite Stelle 2 oder irgend eine andere Zahl j>1 ist, sondern nur, dass \(u_{j} \le u_{1}\) gilt. Da hier \(x>1\), also \(j>1\) ist, folgt nach Voraussetzung (\ref{asdf}), dass \(u_{1} \le u_{j}\) und somit ist Lemma 1 anwendbar.
+Nach Korollar 1 folgt nun, da \(u_{1} = min_{k \ge 2}(u_{k})\), direkt Lemma 2.
 
-Das Spielchen kann nun mit 2, 3 usw. wiederholt werden, bis alle Jobs in aufsteigender Reihenfolge da stehen woraus die Behauptung folgt und bewiesen ist, dass eine aufsteigende Jobanordnung die Jobsstellung l"ost. 
-Zu Betonen ist hierbei, dass man dies, wie bereits erw"ahnt, in aufsteigender Reihenfolge durchf"uhrt, da ein solches Vertauschen eines Niederwertigen durch ein H"oherwertigen nicht grunds"atzlich von Vorteil ist. Bei jedem Schritt muss nicht nur \(u_{j} \le u_{k}\) gelten, \(u_{j}\) muss auch das kleinste Element, abgesehen von \(u_{j-1}\), \(u_{j-2}\) etc. die ja schon nach vorne geschoben wurden, sein, also \(u_{j} \le\) min(\(u_{j+1},\ldots,u_{n})\).
+\textbf{Korollar 2:} Lemma 2 gilt auch f"ur beliebige Jobs j sofern alle \(u_{i_{k}} \ge u_{j}\) mit \(i_{k} > j\) und alle \(u_{i_{k}} \le u_{j}\) mit \(i_{k} < j\), der Job j also genau der Job mit der niedrigsten Nummer ist, der bisher noch nicht betrachtet wurde.
+
+\textbf{Beweis:} Durch Vertauschen mit Jobs niedriger Nummer k"onnen wir den Erwartungswert f"ur D nicht verringern, da nach Voraussetzung alle \(u_{i_{k}}\) kleiner sind als \(u_{j}\). Wir d"urfen also wie bei Lemma 2 die bisherigen Jobs zu einem Job \(\bar 0\) zusammenfassen. In dieser neuen "aquivalenten Politik ist der Job j nun wieder insgesamt der Job mit dem kleinsten Wert \(u_{j}\), somit gilt wie Korollar 1 auch Korollar 2.
+
+TODO \(<\) UND \(>\) PRUEFEN
+
+\textbf{Satz 1:} Eine aufsteigend sortierte Politik \(\pi = (0,1,2,\ldots,n)\) ist die optimale Politik um den Erwartungswert f"ur D zu minimieren, falls \(u_{1} \le u_{2} \le \ldots \le u_{n}\) gilt.
+
+\textbf{Beweis:} Durch mehrmaliges Anwenden von Lemma 2 und Korollar 2 (mit Job 2, Job 3 usw.) erreichen wir eine aufsteigende Reihenfolge, wobei bei jeder Iteration der Erwartungswert fuer die Zeit die ein Prozessor nichts zu tun hat (D) weiter sinkt bzw. gleich bleibt. Ist die aufsteigende Reihenfolge erreicht gibt es keine M"oglichkeit den Erwartungswert f"ur D weiter zu senken. Somit ist 
+
+TODO IST DAS AUCH GLOBALES OPTIMUM?
 
 \newpage
 \section{Ein Prozessor mit begrenzter Zeit}
 
 Mit diesem Problembeispiel m"ochte ich auf einen weiteren Aspekt des \textsc{Stochastic Scheduling} eingehen. Wir haben wie vorher auch n Jobs die ausgef"uhrt werden sollen, haben diesmal aber eine \emph{feste Zeitbegrenzung t}, die wahrscheinlich dazu f"uhrt, dass nicht alle Jobs ausgef"uhrt werden k"onnen.
-Der Unterschied zum ersten Beispiel ist nun aber, dass wir jedem Job i eine Priorit"at \(R_{i}\) zuordnen und die Qualit"at einer Politik nicht wie vorher "uber die Zeit sondern "uber die Summe der Priorit"aten bestimmen, es soll also \begin{displaymath}E(Gewinn) = \sum_{i=0}^{n} E(R_{i}s_{i})\end{displaymath} maximiert werden, wobei \(s_{i} = 1\) ist, wenn der Job ausgef"uhrt werden konnte und 0 wenn nicht.
-Auch hier gilt wieder die Ged"achtnislosigkeit, fr"uher ausgef"uhrte Jobs haben also keine Wirkung auf die ben"otigte Zeit von nachfolgenden Jobs. Wenn also bereits \(1 - t_{i}\) Zeiteinheiten durch andere Jobs verstrichen sind, k"onnen wir den n"achsten Job i als den ersten Job einer Politik zu dem Problem bei der noch \(t_{i}\) Zeiteinheiten "ubrig sind.
+Der Unterschied zum ersten Beispiel ist nun aber, dass wir jedem Job i eine Priorit"at \(R_{i}\) zuordnen und die Qualit"at einer Politik nicht wie vorher "uber die Zeit sondern "uber die Summe der Priorit"aten bestimmen, es soll also \begin{displaymath}E(Gewinn) = \sum_{i=0}^{n} ER_{i}(s_{i})\end{displaymath} maximiert werden, wobei \(s_{i} = 1\) ist, wenn der Job ausgef"uhrt werden konnte und 0 wenn nicht.
+Auch hier gilt wieder die Unabhaengigkeit der Ausf"uhrungszeiten der Jobs. Wenn also bereits \(1 - t_{i}\) Zeiteinheiten durch andere Jobs verstrichen sind, k"onnen wir den n"achsten Job i als den ersten Job einer Politik zu dem Problem bei der noch \(t_{i}\) Zeiteinheiten "ubrig sind.
 
-Wir schreiben die \(s_{i}\) als Wahrscheinlichkeiten aus um es mit dem Erwartungswert benutzen zu k"onnen:
-Die Wahrscheinlichkeit, dass Job i ausgef"uhrt wird ist und noch \(t_{i}\) Zeiteinheiten "ubrig sind, betr"agt wegen Exponentialverteilung:
+Wir schreiben die \(s_{i}\) als Wahrscheinlichkeiten aus um es mit dem Erwartungswert benutzen zu k"onnen. Die Wahrscheinlichkeit, dass Job i ausgef"uhrt wird ist und noch \(t_{i}\) Zeiteinheiten "ubrig sind, betr"agt wegen Exponentialverteilung:
 \begin{displaymath} s_{i} = P(X_{i} < t_{i}) = 1 - e^{-\lambda_{i}t_{i}}\end{displaymath}
 
-Somit ergibt sich f"ur den erwarteten Gewinn f"ur einen Job i und verbleibender Zeit \(t_{i}\):
+Das \(t_{i}\) ist nat"urlich abh"angig von den fr"uheren Jobs. Da wir uns f"ur einen neuen Job jedoch immer erst entscheiden, wenn ein Prozessor frei ist, kennen wir zu diesem Zeitpunkt \(t_{i}\) und k"onnen es als Konstante benutzen.
 
-\begin{displaymath} R_{i} P(X_{i} < t_{i}) = R_{i} (1-e^{-\lambda_{i} t_{i}}) \end{displaymath}
-\begin{displaymath} = \lambda_{i} R_{i} \frac{1-e^{-\lambda_{i} t_{i}}}{\lambda_{i}} \end{displaymath}
+Somit ergibt sich f"ur den erwarteten Gewinn f"ur einen Job i und verbleibender (konstanter) Zeit \(t_{i}\):
+
+\begin{displaymath} R_{i} P(X_{i} < t_{i}) = R_{i} (1-e^{-\lambda_{i} t_{i}}) = \lambda_{i} R_{i} \frac{1-e^{-\lambda_{i} t_{i}}}{\lambda_{i}} \end{displaymath}
 \begin{displaymath} = \lambda_{i} R_{i} E[min(X_{i}, t_{i})] \end{displaymath}
 
 Die letzte Gleichheit folgt aus:
@@ -244,17 +255,30 @@ Die letzte Gleichheit folgt aus:
 \begin{displaymath} E[min(X_{i}, t_{i})] = \int_{0}^{\infty} P[min(X_{i}, t_{i}) > x] dx\end{displaymath}
 \begin{displaymath} = \int_{0}^{t_{i}} e^{-\lambda_{i}x} dx = \frac{(1- e^{-\lambda_{i} t_{i}})}{\lambda_{i}}\end{displaymath}
 
-min(\(X_{i}\), \(t_{i}\)) entspricht dabei der Zeit, die der Prozessor an diesem Job i arbeitet. Im weiteren sei dies jeweils \(T_{i}\).
+\(min(X_{i}, t_{i})\) entspricht dabei der Zeit, die der Prozessor an diesem Job i noch arbeitet, ob er abgebrochen wird oder nicht.
 
 Den Gesamtgewinn haben wir oben bereits definiert, wir m"ussen nur noch unser Ergebnis einsetzen:
 
-\(E_{\pi} (Gesamtgewinn) = E(\sum_{i=0}^{n} \lambda_{i} R_{i} E_{\pi} (T_{i}))\)
+\(E_{\pi} (Gesamtgewinn) = \sum_{i=0}^{n} \lambda_{i} R_{i} E_{\pi}( min(X_{i}, t_{i}) )\)
+
+
+Bleibt die Frage offen, was \(t_{i}\) in diesem Zusammenhang bedeutet. F"ur einen einzelnen Job konnten wir J festsetzen
+
+
+Zwar ist die Politik \(\pi\) eine station"are Politik, die Reihenfolge der Jobs wird zu Beginn festgelegt, wann und auf welchen Prozessor die Jobs jedoch eingesetzt werden wird w"ahrend der Abarbeitung der Politik festgelegt. 
+
+Zwar k"onnte man mit gro"sem Aufwand den Erwartungswert von \(t_{i}\) "uber die Politik und die vor Job i stehenden \(X_{j}\) berechnen, um die optimale Politik zu finden und dann wie im vorherigen Kapitel zwei Politiken vergleichen und dann mit Induktion die Optimalit"at einer bestimmten Reihenfolge , reicht es zu wissen, ben"otigen wir jedoch nicht den Erwartungswert an sich sondern 
+
+
+Zwar ist 
+
+Um den Wert \(t_{i}\) zu kennen, muss man die 
 
 TODO WARUM FOLGT \(\lambda_{i} R_{i}\)
 
 Also folgt:
 
-\textbf{Satz 3:} Der Gesamtgewinn bei gegebener Zeit t wird maximiert, wenn eine Politik gew"ahlt wird, die die Jobs in einer absteigenden Folge von \(\lambda_{i} R_{i}\) f"ur i=1,\ldots,n.
+\textbf{Satz 2:} Der Gesamtgewinn bei gegebener Zeit t wird maximiert, wenn eine Politik gew"ahlt wird, die die Jobs in einer absteigenden Folge von \(\lambda_{i} R_{i}\) f"ur i=1,\ldots,n.
  
 
 \newpage
@@ -283,7 +307,7 @@ dann ist die Reihenfolge (1, 2, \ldots, n) optimal und maximiert den zu erwarten
 
 \textbf{Beweis:}
 
-Wir benutzen hierzu die aus dem vorherigen Kapitel bekannten Zeiten die ein Job noch ben"otigt \(T_{i} = min(X_{i}\), \(t_{i})\) und setzen \(c(i) = u_{i}R_{i}\), sodass nach Voraussetzung gilt: \(c(1) \ge c(2) \ge c(3) \ge \ldots c(n) \ge 0\).
+Wir benutzen hierzu die aus dem vorherigen Kapitel bekannten Zeiten die ein Job noch ben"otigt \(T_{i} = min(X_{i}, t_{i})\) und setzen \(c(i) = u_{i}R_{i}\), sodass nach Voraussetzung gilt: \(c(1) \ge c(2) \ge c(3) \ge \ldots c(n) \ge 0\).
 TODO
 
 \newpage
