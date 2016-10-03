@@ -2,17 +2,16 @@
 \usepackage{graphicx}
 \usepackage{dsfont}
 \input{Rahmen_Top}
-\title{4. Vortrag: Stochastic Scheduling (Sect. 6.2 und 6.3)}
+\title{Stochastic Scheduling}
 \author{Clemens Lode}
 \input{Rahmen_Mid}
-\setcounter{chapter}{3}
+\setcounter{chapter}{2}
 \chapter{Stochastic scheduling}
 \section{Einleitung}
 
 
-Ich werde heute einen Vortrag "uber das sogenannte 'Stochastic Scheduling' halten. Im Speziellen m"ochte ich auf 4 Probleme aus diesem Bereich eingehen die mit der Abarbeitung von Jobs auf ein oder mehreren Prozessoren zu tun haben. Jeder Job ben"otigt eine gewisse Zeit \(X_{j}\), die eine exponentiale Verteilung besitzt. %~~~
-
-%...
+Ich werde heute einen Vortrag "uber das sogenannte 'Stochastic Scheduling' halten. Im Speziellen m"ochte ich auf 4 Probleme aus diesem Bereich eingehen die mit der Abarbeitung von Jobs auf ein oder mehreren Prozessoren zu tun haben. Jeder Job ben"otigt eine gewisse Zeit \(X_{j}\), die eine exponentiale Verteilung besitzt. 
+TODO bessere Einleitung fuer die schriftliche Ausarbeitung
 
 \section{Fall: Ein Prozessor}
 
@@ -22,13 +21,13 @@ Au"serdem haben wir im ersten Fall einen einzelnen Prozessor zur Verf"ugung, der
 
 Was ist die ben"otigte Gesamtzeit unserer Jobs? Bei einem realistischen Beispiel w"are das schwer zu sagen. Verbraucht z.B. ein Job w"ahrend und nach der Bearbeitung sehr viel Speicher w"are wohl das Beste diesen hinten hinzustellen, damit die anderen Jobs nicht z.B. auf der langsamen Festplatte ausgelagert werden m"ussen. Die Zeit die ein einzelner Job ben"otigt w"are also vom bisherigen Verlauf abh"angig.
 
-Wir machen es uns jedoch einfach und begrenzen uns auf den Fall, dass alle Jobs unabh"angig voneinander bearbeitet werden k"onnen. Dies bedeutet, die einzelnen Jobs sind \emph{ged"achtnislos}, d.h. in diesem Fall, dass zu jedem Zeitpunkt t auf Basis der bisherigen Ereignisse die bedingte Wahrscheinlichkeit fuer jeden neuen Job eine bestimmte Zeit zu brauchen genau so gro"s ist, als w"are dies der erste Job in der Auftragsliste.
+Wir machen es uns jedoch einfach und begrenzen uns auf den Fall, dass \emph{alle Jobs unabh"angig voneinander} bearbeitet werden k"onnen. Dies bedeutet, die einzelnen Jobs sind \emph{ged"achtnislos}, d.h. in diesem Fall, dass zu jedem Zeitpunkt t auf Basis der bisherigen Ereignisse die bedingte Wahrscheinlichkeit fuer jeden neuen Job eine bestimmte Zeit zu brauchen genau so gro"s ist, als w"are dies der erste Job in der Auftragsliste.
 
 %BILD! [      |  |      |   ]  
 
 Im weiteren werde ich folgende Definitionen und Voraussetzungen gebrauchen:
 \begin{itemize}
-\item M: "makespan" = ben"otigte Gesamtzeit bis alle Jobs abgearbeitet sind
+\item M: 'makespan' = ben"otigte Gesamtzeit bis alle Jobs abgearbeitet sind
 \item Politik \begin{displaymath}\pi = (i_{1},i_{2},\ldots,i_{n})\end{displaymath} wobei \(i_{j}\) \(\neq\) \(i_{k}\) f"ur \(j \neq k\) und \(0<i_{j}\le n\) eine Jobnummer bezeichnet.
 \item \(X_{j}\) ist eine exponential verteilte Zufallsvariable mit Parameter \begin{displaymath}\lambda = \frac{1}{u_{j}}\end{displaymath}.
 %...
@@ -38,37 +37,39 @@ Im Weiteren gehen wir au"serdem davon aus, dass zum Zeitpunkt 0 bereits ein Job 
 
 Die Gesamtzeit unserer Jobs ist dann nat"urlich die Summe aller Zeiten und somit von der Reihenfolge unabh"angig. Also ist es, wie man es erwartet h"atte, vollkommen egal, welche Politik man w"ahlt. F"ur die erwartete Gesamtzeit ergibt sich also:
 
-\begin{displaymath} E(M) = E(X_{i_{1}})+E(X_{i_{2}})+\cdots+E(X_{i_{n}}) = \sum_{j=1}^{n} E(X_{j})\end{displaymath} \(\leftarrow\) unabh"angig von den \(i_{j}\)s
+\begin{displaymath} E(M) = E(X_{i_{1}})+E(X_{i_{2}})+\cdots+E(X_{i_{n}}) = \sum_{j=1}^{n} E(X_{j})\end{displaymath}
+
+wobei die Summe unabh"angig von den \(i_{j}\), also der Reihenfolge der Jobs, ist.
 
 Mit dieser kleinen Einf"uhrung k"onnen wir uns nun an ein schwierigeres Problem wagen, wir legen im zweiten Teil einen weiteren Prozessor hinzu.
 
 \newpage\section{Fall: Zwei Prozessoren parallel}
 
-Problemdefinition:
+\subsection{Problemdefinition und erster Ansatz}
 
 Es sind wieder eine Reihe von Jobs gegeben, die unterschiedlich lange Zeit ben"otigen. Au"serdem hat man ein System mit diesmal 2 Prozessoren zur Verf"ugung, die beide gleich schnell arbeiten. Die einzelnen Jobs sind stochastisch unabh"angig und exponential verteilt. Das Problem ist nun wieder, eine Politik f"ur die Abarbeitung der Aufgaben zu finden, so dass die insgesamt ben"otigte Zeit minimal ist.
 
 %<BILD/FOLIE! (Balken)>
-
 
 Ein erster Ansatz w"are, die Politiken so aufzubauen, dass wir jedem Job j einen Zeitpunkt k und einen Prozessor l zuordnen. Zwar sind damit alle m"oglichen Kombinationen abgedeckt, jedoch lassen wir eine wertvolle Information unter den Tisch fallen: Wir m"ussen nicht schon vor Beginn des Einf"ugens alle Positionen unserer Jobs kennen. Was wir nur wissen m"ussen ist, welchen Job wir einf"ugen, nachdem auf einem Prozessor wieder ein Job abgearbeitet wurde.
 Somit haben wir die L"ucken geschlo"sen, die ja vor allem deshalb auftreten, weil die Zeiten \(X_{j}\) exponential verteilt und nicht konstant sind.
 
 %<Bild
 
-Der zweite Versuch eine Politik aufzustellen, w"are also, die Aufgaben in 2 Reihen einzuteilen, die dann jeder Prozessor abarbeiten soll. Dies entspricht dem Problem, n Kugeln auf 2 nicht-unterscheidbare Urnen zu verteilen, wir h"atten also bis zu (n = Aufgabenzahl) \begin{displaymath}n!+(n-1)!+\cdots+2!+1!\end{displaymath} verschiedene Politiken. 
+Der zweite Versuch eine Politik aufzustellen, w"are also, die Aufgaben in 2 Reihen einzuteilen, die dann jeder Prozessor abarbeiten soll. Dies entspricht dem Problem, n Kugeln auf 2 nicht-unterscheidbare Urnen zu verteilen, wir h"atten also bis zu (n = Aufgabenzahl) \begin{displaymath}n!+(n-1)!+\cdots+2!+1!\end{displaymath} verschiedene Belegungsm"oglichkeiten f"ur die Politiken. 
 
 %<BILD/FOLIE! (mehr Balken)>
 
+\subsection{Einbau von \emph{Expertenwissen}}
+	
 Zwar k"onnte man auch mit diesem Modell mittels Verfahren von Stochastic Scheduling auf die einzelnen Aussagen und S"atze kommen, jedoch ist es bei Optimierungsaufgaben grunds"atzlich hilfreich, diese so weit wie moeglich zu vereinfachen, vor allem mit sogenanntem 'Expertenwissen'. Dabei ist nat"urlich immer darauf zu achten, dass der optimale Fall mit der Politik noch herzustellen ist.
-% evtl Paragraph teilweise hoch
 
 Es ist klar, dass der Versuch auf Prozessor \(P_{1}\) n Jobs und auf Prozessor \(P_{2}\) 0 Jobs zu verteilen f"ur \(n>1\) sicher nicht zum optimalen Ergebnis f"uhren kann. So eine 'kaputte' Politik k"onnte man aber 'reparieren' in dem man, zu jedem Zeitpunkt bei dem P2 keine Aufgabe zu bearbeiten hat, einfach die n"achste Aufgabe aus unserer Politik zuweisen. Wenden wir diese Regel auf jede unserer Politiken an, folgt, dass eine Politik die alle n Aufgaben auf einen Prozessor legt, \emph{gleichwertig} zu allen anderen Kombinationen der Verteilung der Aufgaben ist. Mit gleichwertig ist hier gemeint, dass damit eine optimale Politik gebildet werden kann, wenn auch ein paar m"ogliche, aber sicher nicht optimale Politiken wegfallen.
 
 %<BEISPIEL>
+BILD
 
-
-Dies reduziert unseren Zahl unterschiedlicher Politiken auf n! und erleichtert die folgenden Beweise, da wir nur noch Politiken haben, die aus \emph{einer} anstatt zwei Reihen von Aufgaben bestehen. Wir k"onnen uns nun dem eigentlichen Problem widmen:
+Dies reduziert unseren Zahl unterschiedlicher Politiken auf \textbf{n!} und erleichtert die folgenden Beweise, da wir nur noch Politiken haben, die aus \emph{einer} anstatt zwei Reihen von Aufgaben bestehen. Wir k"onnen uns nun dem eigentlichen Problem widmen:
 
 Die Frage ist nun zuerst, ob durch unsere Regel das Problem nicht schon gel"ost wurde. Wenn wir immer eine Aufgabe auf den Prozessor legen, der nicht besch"aftigt ist, gleichen wir bei jedem Schritt beide Balken aus. Erreichen wir dadurch das optimale Gleichgewicht? Nein. Dies w"urde der Fall sein, wenn alle Aufgaben gleiche Zeit ben"otigten und eine gerade Anzahl Aufgaben vorliegt. Legen wir aber beispielsweise die Aufgaben mit aufsteigenden Werten auf die Prozessoren, schwankt der Unterschied zwischen beiden bei jedem Schritt mehr, 
 	
@@ -79,7 +80,7 @@ Die Frage ist nun zuerst, ob durch unsere Regel das Problem nicht schon gel"ost 
 \begin{tabular}{|r|ccc|}
 \hline
 Schritt & Idle-Zeit & 1. Prozessor & 2. Prozessor \\
-\hline \\
+\hline
 0 & 1 & 1 & 0 \\
 1 & 1 & 1 & 2 \\
 2 & 2 & 4 & 2 \\
@@ -107,20 +108,16 @@ Investiert man in die Aufgabe etwas Denkarbeit wird auch klar, dass wohl die opt
 Das ganze nochmal formal aufgeschrieben und bewiesen, und schon sind wir mit dem ersten Teil fertig:
 
 Seien 2 identische Prozessoren gegeben um n Aufgaben abzuarbeiten. Beide laufen unabh"angig, k"onnen also jede Aufgabe zu jeder Zeit in einer beliebigen Reihenfolge bearbeiten. Startzeit ist t = 0.
-Sei \(X_{j}\) die Zeit um Aufgabe j zu bearbeiten und sei diese exponentialverteilt mit \begin{displaymath}\lambda = u_j, j=1,\ldots,n\end{displaymath}.
+Sei \(X_{j}\) die Zeit um Aufgabe j zu bearbeiten und sei diese exponential verteilt mit \begin{displaymath}\lambda_{j} = u_{j}, j=1,\ldots,n\end{displaymath}.
 Eine Politik ist eine Permutation \begin{displaymath}i_{1},\ldots,i_{n} = 1,2,\ldots,n\end{displaymath} wie die Aufgaben der Reihe nach angeordnet sind. Die gesamte Zeit bis alle Aufgaben erf"ullt sind wird 'makespan' genannt und das Ziel ist, die makespan zu minimieren. TODO SCHON OBEN GESCHRIEBEN
 
-F"ur jede Politik \begin{displaymath}\pi = (0,i_{1},\ldots, i_{n})\end{displaymath} ist jeweils M  die Makespan und D die Zeit die einer der Prozessoren stillsteht. Somit ist zum Zeitpunkt M - D einer der Prozessoren fertig und keine weiteren Auftr"age mehr in der Warteschlange und M + M - D die Summe aller Zeiten, also \begin{displaymath}\sum_{j=0}^n X_{j}\end{displaymath}
+F"ur jede Politik \begin{displaymath}\pi = (0,i_{1},\ldots, i_{n})\end{displaymath} ist jeweils M  die Makespan und D die Zeit die einer der Prozessoren stillsteht. Somit ist zum Zeitpunkt M - D einer der Prozessoren fertig und keine weiteren Auftr"age mehr in der Warteschlange und M + M - D die Summe aller Zeiten, also \(\sum_{j=0}^n X_{j}\)
 
-%#TODO JOB 0 IST ERSTER JOB IN DER SCHLANGE ~~~
-%TODO EQUATIONS + VERWEISE IM TEXT
-%<BILD>
+TODO Job 0 erster Job in der Schlange
 
-Also gilt:
+Also gilt: \(2M - D - \sum_{j=0}^{n} X_{j} = 0\)
 
-\begin{displaymath}2M - D - \sum_{j=0}^{n} X_{j} = 0\end{displaymath}
-
-und somit f"ur jede Strategie \(pi\):
+und somit f"ur jede Politik \(\pi\):
 
 \begin{displaymath}E_{\pi}(2M-D-\sum_{j=0}^{n} X_{j}) = E_{\pi}(0)\end{displaymath}
 
@@ -128,80 +125,73 @@ und somit f"ur jede Strategie \(pi\):
 
 \begin{displaymath}2* E_{\pi} (M) = E_{\pi} (D) + \sum_{j=0}^{n} E_{\pi} (X_{j})\end{displaymath}
 
-Da nach Voraussetzung \(X_{j}\) von der Reihenfolge, also der Politik \(\pi\) nicht abh"angt, ist \(\sum_{j=0}^{n} E(X_{j})\) eine Konstante f"ur jede Politik pi (f"ur die gleichen \(X_{j}\) und wir setzen \begin{displaymath}c = \sum_{j=0}^{n} E(X_{j})\end{displaymath}:
+Da nach Voraussetzung \(X_{j}\) von der Reihenfolge, also der Politik \(\pi\) nicht abh"angt, ist \(\sum_{j=0}^{n} E(X_{j})\) eine Konstante f"ur jede Politik pi (f"ur die gleichen \(X_{j}\) und wir setzen \(c = \sum_{j=0}^{n} E(X_{j})\):
 
-\begin{displaymath}E_{\pi}(M) = \frac{E_{\pi}(D) + c}{2}\end{displaymath}
+\begin{equation}\label{e31}E_{\pi}(M) = \frac{E_{\pi}(D) + c}{2}\end{equation}
 
 Also ergibt sich nun auch formal, dass durch Minimierung der erwarteten Differenz D in der einer der Pr"ozessoren unbesch"aftigt ist, auch die Makespan minimiert wird.
 
 
-Als n"achstes zeige ich, dass eine Politik die in aufsteigender Reihenfolge der \(u_{i}\)s (also der ~~~ aufsteigend Zeiten) angeordnet ist, optimal ist.
+Als n"achstes zeige ich, dass eine Politik die in aufsteigender Reihenfolge der \(u_{i}\) (also der aufsteigend Zeiten TODO PRUEFEN) angeordnet ist, optimal ist.
 Dies wird wie folgt induktiv bewiesen:
 
-Behauptung: Sei eine Politik \begin{displaymath}\pi = (0,2,1,3,\ldots,n)\end{displaymath} und eine Politik \begin{displaymath}\bar \pi` = (0, 1,2,3,\ldots,n)\end{displaymath} gegeben. Ist \begin{displaymath}u_{1} = min k \ge 1 u_{k}\end{displaymath} dann gilt \begin{displaymath}E_{\bar \pi`}(D)\le = E_{\pi}(D)\end{displaymath}.
-
-Die Idee ist also, eine einzelne Transposition durchzuf"uhren und dann zu beweisen, dass sich dadurch \(E_{\pi}\)(D) erh"oht.
-
-Beweis:
-
-Seien \(\pi_{j}\) und \(\bar\pi_{j}\), j \(\ge\) 0 die zu \(\pi\) und \(\bar\pi\) geh"origen Wahrscheinlichkeiten, dass die letzte von den Prozessoren abgeschlossene Aufgabe Job j ist, also z.B. Prozessor A fertig ist und Prozessor B noch an Aufgabe j arbeitet und keine weiteren Aufgaben mehr in der Warteschlange/Politik liegen. %~~~
-
-Klar ist \begin{displaymath}\pi_{0} = \bar\pi_{0} = P(X_{0} > \sum_{j=1}^{n} X_{j})\end{displaymath}, dass also der erste Job der Wahrscheinlichkeit entspricht, dass \(X_{0}\) gr"osser als alle anderen zusammengenommen ~~ ergibt, da \(\pi_{0}\) ja jeweils der erste Job in beiden Politiken ist.
-
-Wir wollen nun durch Induktion zeigen, dass \begin{displaymath}\bar\pi_{1} \le \pi_{1}, \bar\pi_{j} \ge \pi_{j}\end{displaymath} f"ur \begin{displaymath}j=2,\ldots,n\end{displaymath}.
-
-Induktionsanfang: F"ur n = 1 f"allt \begin{displaymath}\bar\pi_{j} \ge \pi_{j}\end{displaymath} f"ur j = 2,\ldots,n sowieso weg, da n < 2 und \begin{displaymath}\bar\pi_{1} \le \pi_{1}\end{displaymath} gilt nach der Voraussetzung \(u_{1}\) = min \(u_{k}\), da \(\pi\) an der Stelle 1 \(u_{1}\) stehen hat und \(\bar\pi\) dagegen \(u_{2}\).
-
-Induktionsvoraussetzung: Es gelte also die Behauptung f"ur den Fall, dass nur n-1 jobs (zus"atzlich zu job 0) vorliegen.
-
-Induktionsschluss: Seien nun n jobs zu erledigen und seien \(\Phi_{j}\) und \(\bar\Phi_{j}\), wieder zugeh"orig zu \(\pi\) und \(\bar\pi\), j=1,\ldots,n-1 die Wahrscheinlichkeiten, dass Job j der letzte der Jobs 0,\ldots,n-1.
-
-%Exponential and the "Lack of Memory" property 	Here the "Lack of Memory" property of the exponential is used. See page 198-199 and equation 4-12. Essentially, this property says that the P(X>t) d"os not depend on how much time has already elapsed. For example, if the average life of a light bulb is 2 years (exponentially distributed), then the probability that the bulb will last 1 more year d"os not depend on how old the bulb already is.
-
-%~~ Dadurch, und das bei beiden Politiken der letzte Job n ist, erhalten wir:
-
-\begin{displaymath}\pi_j = \Phi_j u_n / (u_n + u_j)\end{displaymath} und \begin{displaymath}\bar\pi_j = \bar\Phi_j u_n / (u_n + u_j), j = 1...n-1\end{displaymath}
+\textbf{Lemma 1:} Seien zwei Politiken \(\pi\) und \(\bar \pi\) gegeben:
+\begin{displaymath}\pi = (0,2,1,3,\ldots,n)\end{displaymath} 
+\begin{displaymath}\bar \pi = (0, 1,2,3,\ldots,n)\end{displaymath} 
+Gelte au"serdem, dass \(u_{1} = min(u_{k \ge 1})\) dann gilt:
+\begin{displaymath}E_{\bar \pi}(D)\le E_{\pi}(D)\end{displaymath}.
 
 
-Woher kommt dieses \begin{displaymath}\frac{u_{n}}{u_{n}+u_{j}}\end{displaymath}?
-%Das frage ich mich auch :-(
 
-Also, was ist \(u_{n}\)? u war die Lambda der Exponentialverteilung, also \begin{displaymath}0 \le u \le 1\end{displaymath} und \begin{displaymath}X_{j} = F(t) = 1 - e^{-u_{j}t}\end{displaymath}.
-Aus \(0 \le u\) folgt, dass der Quotient \(<1\) ist, die Wahrscheinlichkeit also kleiner ist, als \(\Phi_{j}\). 
-Nun, wie haben wir \(\Phi_{j}\) definiert? \(\Phi_{j}\) war die Wahrscheinlichkeit, dass j der letzte Job ist, wenn der n-te Job weggelassen wird, also im Fall mit \((n-1)\) Jobs. Legen wir nun einfach noch den n-ten Job hinzu, ergeben sich logischerweise 2 F"alle: j bleibt der letzte Job oder n wird der letzte Job. Da dies auf den ersten Blick nicht einleuchtend ist, hier wieder ein Bild:
+Die Idee ist also, eine einzelne Transposition durchzuf"uhren und dann zu beweisen, dass sich dadurch \(E_{\pi}\)(D) erh"oht. ???? TODO CHECK
 
+\textbf{Beweis:} Seien \(\pi_{j}\) und \(\bar\pi_{j}\), j \(\ge\) 0 die zu \(\pi\) und \(\bar\pi\) geh"origen Wahrscheinlichkeiten, dass die letzte von den Prozessoren abgeschlossene Aufgabe Job j ist, also z.B. Prozessor A fertig ist und Prozessor B noch an Aufgabe j arbeitet und keine weiteren Aufgaben mehr in der Warteschlange/Politik liegen.
+
+\begin{displaymath}\pi_{0} = \bar\pi_{0} = P(X_{0} > \sum_{j=1}^{n} X_{j})\end{displaymath} ist klar. Der erste Job entspricht der Wahrscheinlichkeit, dass \(X_{0}\) gr"osser ist als alle anderen zusammengenommen, da \(\pi_{0}\) ja jeweils der erste Job in beiden Politiken \(\pi\) und \(\bar \pi\) ist.
+
+Wir wollen nun durch Induktion zeigen, dass \begin{equation}\label{e32}\bar\pi_{1} \le \pi_{1}, \qquad \bar\pi_{j} \ge \pi_{j}, \qquad  j=2,\ldots,n\end{equation}.
+
+\textbf{Induktionsanfang:} F"ur n = 1 f"allt \(\bar\pi_{j} \ge \pi_{j}\) f"ur j = 2,\ldots,n sowieso weg, da \(n < 2\) und \(\bar\pi_{1} \le \pi_{1}\) gilt nach der Voraussetzung \(u_{1}\) = min(\(u_{k \ge 1}\)), da \(\pi\) an der Stelle 1 \(u_{1}\) stehen hat und \(\bar \pi\) dagegen \(u_{2}\).
+
+\textbf{Induktionsvoraussetzung:} Es gelte also die Behauptung (\ref{e32}) f"ur den Fall, dass nur n-1 Jobs (zus"atzlich zu Job 0) vorliegen.
+
+\textbf{Induktionsschluss:} Seien nun diesmal (n-1)+1 = n Jobs zu erledigen und seien \(\Phi_{j}\) und \(\bar\Phi_{j}\) (wieder zugeh"orig zu \(\pi\) und \(\bar\pi\), j=1,\ldots,n-1) die Wahrscheinlichkeiten, dass Job j der letzte der Jobs 0,\ldots,n-1 f"ur die jeweilige Politik ist.
+Nach Induktionsvoraussetzung gilt (vgl. (\ref{e32})), dass dann
+
+\begin{equation}\label{e33}\bar\Phi_{1} \le \Phi_{1}, \qquad \bar\Phi_{j} \ge \Phi_{j}, \qquad  j=2,\ldots,n-1\end{equation}
+
+Bringt man nun die anfangs erw"ahnte Ged"achtnislosigkeit ins Spiel k"onnen wir nun leicht die Induktion fortsetzen. Nach der in diesem Fall vorliegenden Ged"achtnislosigkeit herrschen zu Beginn des letzten Jobs die selben Bedingungen als w"are dies der erste Job und ein Job 0 bereits im Prozessor. Die Laenge von Job 0 entspricht hierbei der verbleibenden Zeit von Job j. Wir m"ussen nun also nur die zwei Jobs vergleichen und mit der Wahrscheinlichkeit multiplizieren, dass Job j der letzte Job f"ur den Fall n-1 ist:
+
+\begin{displaymath}\pi_{j} = \Phi_{j} \frac{u_{n}}{u_{n} + u_{j}}, \qquad \bar\pi_{j} = \bar\Phi_{j} \frac{u_{n}}{u_{n} + u_{j}}, \qquad j = 1,\ldots,n-1\end{displaymath}
+
+\(\frac{u_{n}}{u_{n}+u_{j}}\) entspricht hier genau dem Fall f"ur 2 Jobs, also max(\(X_{j}\), \(X_{n}\).
+
+TODO BILD! Abschneiden mit Hilfe der Gedaechtnislosigkeit
 %|||||||||| (n-4) ||||||||| (n-2) ||| (n-1) ||||||||||| (n)
 %|||||||||||||||||| (n-3) ||||||||||||||||||| (j = n-2)
 
-\(\pi_{j}\) war definiert als \begin{displaymath}P(X_{j} > \sum_{i=1}^{n} X_{i} - X_{j}\end{displaymath}
-\(\Phi_{j}\) war definiert als \begin{displaymath}P(X_{j} > [\sum_{i=1}^{n-1} X_{i}] - X_{j})) = P(X_{j} > [\sum_{i=1}^{n-1} X_{i}] - X_{j} + X_{n}) * \frac{u_{n} + u_{j}}{u_{n}}\end{displaymath}
+Kennen wir alle Wahrscheinlichkeiten \(\pi_{0}\) bis \(\pi_{n-1}\) kennen wir auch \(\pi_{n}\), da egal welche Politik wir w"ahlen \emph{auf jeden Fall} ein Job die letzte ist.
 
-%HIER NOCHMAL NACHFRAGEN!
+Wir benutzen nun einfach die Gegenwahrscheinlichkeit \(\pi_{n} = 1 - \sum_{j=0}^{n} \pi_{j}\) TODO WARUM?
 
-\begin{displaymath}\Rightarrow \pi_{j} =  \Phi_{j} * \frac{u_{n}}{u_{n} + u_{j}}\end{displaymath}
+Wir k"onnen nun rechnen: TODO UEBERPRUEFEN V.A. SUMMENZEICHEN
 
-und \begin{displaymath}\bar\pi_{j} = \bar\Phi_{j} * \frac{u_{n}}{u_{n} + u_{j}}\end{displaymath}
+\begin{displaymath}\bar\pi_n - \pi_n =  \sum_{j=0}^{n-1}(\bar\pi_{j} - \pi_{j}) = \sum_{j=0}^{n-1}((\Phi_{j} - \bar\Phi_{j}) * \frac{u_{n}}{u_{n} + u_{j}} =\end{displaymath}
+Durch Abspalten des ersten Gliedes ergibt sich:
+\begin{displaymath}=( \bar\Phi_{1} - \Phi_{1}) \frac{u_{1}}{u_{1} + u_{n}} + \sum_{j=2}^{n-1} (\bar\Phi_{j} - \Phi_{j}) \frac{u_{j}}{u_{j}+u_{n}} \end{displaymath}
+Dies k"onnen wir mit Hilfe von \(u_{j} \ge u_{1} \Leftrightarrow \frac{u_{j}}{u_{j} + u_{n}} \ge \frac{u_{1}}{u_{1} + u_{n}}\) absch"atzen:
+\begin{displaymath}\ge \frac{u_{1}}{u_{1}+u_{n}} \sum_{j=1}^{n-1} (\bar\Phi_{j} - \Phi_{j})\end{displaymath}
 
-\begin{displaymath}\Rightarrow \bar\pi_{1} \le \pi_{1}, \bar\pi_{j} \ge \pi_{j}, j=2,\ldots,n-1\end{displaymath}
+Es folgt also, dass \(\bar\pi \ge \pi\) und somit (\ref{e32}) gilt und wir das Lemma durch die Induktion bewiesen haben.
 
+\subsection{Beweis fuer beliebige Politiken}
 
-Kennen wir alle Wahrscheinlichkeiten \(\pi_{0}\) bis \(\pi_{n-1}\) kennen wir auch \(\pi_{n}\), da egal welche Politik wir w"ahlen AUF JEDEN FALL eine Politik die letzte ist.
-
-Wir benutzen einfach die Gegenwahrscheinlichkeit:
-
-\begin{displaymath}\pi_{n} = 1 - \sum_{j=0}^{n} \pi_{j}\end{displaymath}
-
-bzw. \begin{displaymath}\bar\pi_n - \pi_n =  \sum(\bar\pi_j - \pi_j) = \sum((\Phi_{j} - \bar\Phi_{j}) * \frac{u_{n}}{u_{n} + u_{j}} =\end{displaymath}
-\begin{displaymath}(\bar\Phi_{1} - \Phi_{1}) \frac{u_{1}}{u_{1} + u_{n}} + \sum_{j=2}^{n-1} (\bar\Phi_{j} - \Phi_{j}) \frac{u_{j}}{u_{j}+u_{n}} \end{displaymath}
-%~~` ja ok
-%~~
-
-Wir haben jetzt also per Induktion gezeigt, dass der Erwartungswert der Zeit in der ein Prozessor still steht bei Politik (0,2,1,3,\ldots,n) mindestens so gro"s ist wie bei (0,1,2,3,\ldots,n), falls \begin{displaymath}u_{1} = min k u_{k}\end{displaymath}
+Wir haben jetzt also per Induktion gezeigt, dass der Erwartungswert der Zeit in der ein Prozessor still steht bei Politik (0,2,1,3,\ldots,n) mindestens so gro"s ist wie bei (0,1,2,3,\ldots,n), falls \(u_{1}\) = min(\(u_{k \ge 1}\).
 
 Mit dieser Grundlage k"onnen wir nun zus"atzlich zeigen, dass \((0,1,2,\ldots,n)\) die optimale Politik ist um den Erwartungswert f"ur D zu minimieren.
 
-Also:
-Sei wieder \begin{displaymath}u_{1} \le u_{2} \le \ldots \le u_{n}\end{displaymath} (*)
+TODO Satzbezeichnung
+\textbf{Also:} Sei wieder \begin{equation}\label{asdf}u_{1} \le u_{2} \le \ldots \le u_{n}\end{equation} 
 
 Nehmen wir also eine neue Politik her, die nicht mit (0,1,...) beginnt, dann k"onnen wir mit dem bewiesenen Satz 3.1~~~~ direkt folgern, dass diese neue Politik mehr Zeit ben"otigt als die alte. Wenn wir jetzt noch zeigen k"onnten, dass wenn Job 1 an einer beliebigen anderen Stelle k steht, die Politik besser w"are bei der die Stellen k und k-1 vertauscht sind, h"atten wir die Behauptung bewiesen:
 
@@ -210,49 +200,33 @@ Seien also \(\pi\) und \(\bar\pi\) zwei Politiken mit der selben Reihenfolge der
 \begin{displaymath}\pi  = (0,i_{1},i_{2},\ldots,i_{k-2},i_{k-1},i_{k} = 1,i_{k+1},\ldots,i_{n})\end{displaymath}
 \begin{displaymath}\bar\pi = (0, i_{1}, i_{2},\ldots, i_{k-2}, i_{k-1} = 1, i_{k}, i_{k+1},\ldots, i_{n})\end{displaymath}
 
-Wieder nach der Eigenschaft des \textsc{lack of memory} haben die Jobs 0 bis \(i_{k-2}\) keinen Einfluss auf die Nachfolgenden, wie auch \(i_{k-1}\) und \(i_{k}\) keinen Einfluss auf die Zeiten der nachfolgenden Jobs haben. Somit kann man diese zu einem neuen Job 0 zusammenfassen und es ergibt sich:
+Wieder nach der Eigenschaft der Ged"achtnislosigkeit haben die Jobs 0 bis \(i_{k-2}\) keinen Einfluss auf die Nachfolgenden, wie auch \(i_{k-1}\) und \(i_{k}\) keinen Einfluss auf die Zeiten der nachfolgenden Jobs haben. Somit kann man diese zu einem neuen Job 0 zusammenfassen und es ergibt sich:
 
 \begin{displaymath}\pi = (0, i_{k-1}, i_{k} = 1,\ldots), \bar\pi = (0, i_{k-1} = 1, i_{k},\ldots)\end{displaymath}
 bzw.
 \begin{displaymath}\pi = (0, x, 1,\ldots), \bar\pi = (0, 1, x,\ldots)\end{displaymath}
 
-In 3.1 ~~~ haben wir nur (0,2,1,3,\ldots) mit (0,1,2,3,\ldots) verglichen. Es ist aber nicht entscheidend, ob beim Beweis die zweite Stelle 2 oder irgend eine andere Zahl j>1 ist, sondern nur, dass \begin{displaymath}u_{j} \le u_{1}\end{displaymath} gilt. Da hier \(x>1\), also \(j>1\) ist, folgt nach Voraussetzung (*), dass \begin{displaymath}u_{1} \le u_{j}\end{displaymath} und somit ist Lemma 3.1 anwendbar.
+In (\ref{e32}) haben wir nur (0,2,1,3,\ldots) mit (0,1,2,3,\ldots) verglichen. Es ist aber nicht entscheidend, ob beim Beweis die zweite Stelle 2 oder irgend eine andere Zahl j>1 ist, sondern nur, dass \(u_{j} \le u_{1}\) gilt. Da hier \(x>1\), also \(j>1\) ist, folgt nach Voraussetzung (\ref{asdf}), dass \(u_{1} \le u_{j}\) und somit ist Lemma 3.1 anwendbar.
 
-Das Spielchen kann nun mit 2, 3 usw. wiederholt werden, bis alle Jobs in aufsteigender Reihenfolge da stehen woraus die Behauptung folgt und bewiesen ist, dass eine aufsteigende Jobanordnung die Aufgabenstellung l"ost. Zu Betonen ist hierbei, dass man dies, wie gesagt, in aufsteigender Reihenfolge durchf"uhrt, da ein solches Vertauschen eines niederwertigen durch ein h"oherwertigen nicht grunds"atzlich von Vorteil ist, denn es muss nicht nur \begin{displaymath}u_{j} \le u_{k}\end{displaymath} sein, \(u_{j}\) muss auch das kleinste Element, abgesehen von \(u_{j-1}\), \(u_{j-2}\) etc. die ja schon nach vorne geschoben wurden, aller Jobs sein, also \begin{displaymath}u_{j} \le min u_{j+1},\ldots,u_{n}\end{displaymath}%~~~~) sein.~~~~ //TODO
+Das Spielchen kann nun mit 2, 3 usw. wiederholt werden, bis alle Jobs in aufsteigender Reihenfolge da stehen woraus die Behauptung folgt und bewiesen ist, dass eine aufsteigende Jobanordnung die Aufgabenstellung l"ost. 
+Zu Betonen ist hierbei, dass man dies, wie bereits erw"ahnt, in aufsteigender Reihenfolge durchf"uhrt, da ein solches Vertauschen eines Niederwertigen durch ein H"oherwertigen nicht grunds"atzlich von Vorteil ist. Bei jedem Schritt muss nicht nur \(u_{j} \le u_{k}\) gelten, \(u_{j}\) muss auch das kleinste Element, abgesehen von \(u_{j-1}\), \(u_{j-2}\) etc. die ja schon nach vorne geschoben wurden, sein, also \(u_{j} \le\) min(\(u_{j+1},\ldots,u_{n})\).
 
 Das w"are es eigentlich fast schon zum zweiten Punkt dieses Vortrags. Ich m"ochte jedoch noch einmal kurz auf die anfangs erw"ahnten Politiken eingehen, die man durch geschicktes W"ahlen der Form der Politik und der Einf"ugeregel wegfallen hat lassen.
+TODO raus bei Textversion
 
 \newpage
-\section{Ein Prozessor mit begrenzter Zeit}
+\section{Ein Prozessor mit begrenzter Zeit TODO}
 
-Mit diesem Problembeispiel m"ochte ich auf einen weiteren Aspekt des Stochastic Scheduling eingehen. Wir haben wie vorher auch n Jobs die ausgef"uhrt werden sollen, haben diesmal aber eine feste Zeitbegrenzung t, die wahrscheinlich dazu f"uhrt, dass nicht alle Jobs ausgef"uhrt werden k"onnen.
-Der Unterschied zum ersten Beispiel ist nun aber, dass wir jedem Job i eine Priorit"at \(R_{i}\) zuordnen und die Qualit"at einer Politik nicht wie vorher "uber die Zeit sondern "uber die Summe der Priorit"aten bestimmen, es soll also \begin{displaymath}\sum_{i=0}^{n}R_{i}s_{i}\end{displaymath} maximiert werden, wobei \(s_{i} = 1\) ist, wenn der Job ausgef"uhrt werden konnte und 0 wenn nicht.
-Auch hier gilt wieder die 'lack-of-memory' Eigenschaft, fr"uher ausgef"uhrte Jobs haben also keine Wirkung auf die ben"otigte Zeit von nachfolgenden Jobs.
+Mit diesem Problembeispiel m"ochte ich auf einen weiteren Aspekt des \textsc{Stochastic Scheduling} eingehen. Wir haben wie vorher auch n Jobs die ausgef"uhrt werden sollen, haben diesmal aber eine \emph{feste Zeitbegrenzung t}, die wahrscheinlich dazu f"uhrt, dass nicht alle Jobs ausgef"uhrt werden k"onnen.
+Der Unterschied zum ersten Beispiel ist nun aber, dass wir jedem Job i eine Priorit"at \(R_{i}\) zuordnen und die Qualit"at einer Politik nicht wie vorher "uber die Zeit sondern "uber die Summe der Priorit"aten bestimmen, es soll also \begin{displaymath}E(Gewinn) = E(\sum_{i=0}^{n}R_{i}s_{i})\end{displaymath} maximiert werden, wobei \(s_{i} = 1\) ist, wenn der Job ausgef"uhrt werden konnte und 0 wenn nicht.
+Auch hier gilt wieder die Ged"achtnislosigkeit, fr"uher ausgef"uhrte Jobs haben also keine Wirkung auf die ben"otigte Zeit von nachfolgenden Jobs.
 
-Das \(s_{i}\) kann man nat"urlich auch als Wahrscheinlichkeit schreiben, wenn man den Erwartungswert der Qualit"at der Politik haben will: ~~~
-
-....
-
-
-%"Lack of memory" means the probability of failure in a specific time interval is the same regardless of the starting point of that time interval %TODO
-%"ged"achtnislos"
-
-%Interpretation: Ein Objekt lebt bereits mehr als x
-%Zeiteinheiten. Dann ist die bedingte Wkt. dafur, ¨
-%dass es innerhalb der n¨  achsten x Zeiteinheiten
-%ausf¨ lt, gleich der unbedingten Wkt., dass es uber-
-%    al                                         ¨
-%haupt h¨ ochstens x Zeiteinheiten lebt. Mit anderen
-%Worten, das Objekt ist stets (so gut wie) neu" .
-                              "
-
-
-
-
-
+Dazu schreiben wir das \(s_{i}\) als Wahrscheinlichkeit aus um es mit dem Erwartungswert benutzen zu k"onnen.
+...
+TODO ueberarbeiten, nochmal nachlesen
 
 \newpage
-\section{Zwei Prozessoren mit begrenzter Zeit}
+\section{Zwei Prozessoren mit begrenzter Zeit TODO}
 
 Im letzten Teil kombinieren wir nun die vorherigen 2 Problemstellungen. Wir haben 2 Prozessoren, eine feste Zeit t und f"ur jeden Job eine Priorit"at \(R_{j}\).
 Nach 2.1 ist der Gesamtgewinn ~~ unter einer Politik \(\pi\):
@@ -264,29 +238,53 @@ Dies ist aber nicht der Fall wie ein kleines Gegenbeispiel zeigt:
 
 \(u_{j}\)\(R_{j}\) == 1 f"ur alle j und \begin{displaymath}u_{1} < u_{2} < \cdots < u_{n}\end{displaymath}.
 
-Es w"urde folgen, dass, da ja alle \(u_{j}\)\(R_{j}\) gleich gro"s sind, jede beliebige Reihenfolge optimal ist. Dies stimmt auch im Fall von einem Prozessor, bei zwei Prozessoren tritt jedoch wie anfangs besprochen eine immer gr"o"sere Idle Zeit auf, wenn wir die Jobs absteigend nach den \(u_{j}\)s (bzw. aufsteigend nach den ben"otigten Zeiten) sortieren.
+Es w"urde folgen, dass, da ja alle \(u_{j}\)\(R_{j}\) gleich gro"s sind, jede beliebige Reihenfolge optimal ist. Dies stimmt auch im Fall von einem Prozessor, bei zwei Prozessoren tritt jedoch wie anfangs besprochen eine immer gr"o"sere Idle Zeit auf, wenn wir die Jobs absteigend nach den \(u_{j}\) (bzw. aufsteigend nach den ben"otigten Zeiten) sortieren.
 
 Wir k"onnen jedoch zeigen, dass wie im Fall ohne Priorit"aten eine aufsteigende Reihenfolge optimal ist, wenn wir gewisse Bedingungen voraussetzen.
 
-Behauptung:
+\textbf{Behauptung:}
 Sei 
 \begin{displaymath}u_{1} \le u_{2} \le \cdots \le u_{n}\end{displaymath} 
 und 
 \begin{displaymath}u_{1}R_{1} \ge u_{2}R_{2} \ge \cdots \ge u_{n}R_{n} \ge 0\end{displaymath}
 dann ist die Reihenfolge (1, 2, \ldots, n) optimal und maximiert den zu erwartenden Gesamtgewinn f"ur Zeit \(t>0\).
 
-Beweis:
+\textbf{Beweis:}
+TODO
 
-
+TODO in subsections aufteilen
 \newpage
-\section{Weitere verwandte Probleme und Anwendungen}
-Schluss:
+\section{Ausblick und Zusammenfassung}
+
+Insgesamt hat dieser Vortrag zeigen k"onnen, wie man sich Schritt f"ur Schritt an eine Problemstellung des Stochastic Scheduling herann"ahert und dann durch Benutzung der Voraussetzungen, hier vor allem der Ged"achtnislosigkeit und der Induktion, die einzelnen Aussagen zu beweisen.
+
+In den ersten zwei Kapiteln wurde neben einigen Definitionen vor allem auf die Herangehensweise wert gelegt, wie also eine Politik zu definieren ist. Au"serdem wurde gezeigt, dass es f"ur das jeweilige Problem unterschiedlich gut angepasste Politiken gibt. Hier wurde ein Vergleich der Politik 'Setze Jobs an bestimmten Zeiten' und der Politik 'Setze Jobs sobald der Prozessor frei wird' aufgestellt, der gezeigt hat, dass durch Einbringen von genauer Kenntnis des Problems die Politik wesentlich vereinfacht werden konnte, ohne dass der optimale Fall verloren geht.
+
+Im ersten Kapitel wurde auf den Problemfall mit einem einzelnen Prozessor eingegangen. Mit korrekter Politikdefinition lie"s sich das Problem relativ trivial l"osen, alle Politiken waren optimal, da \(E(sum_{j=0}^{n} X_{i_{j}})\) von der Anordnung der Jobs \(i_{j}\) unabh"angig war. 
+			
+Das Kapitel hat den Weg fuer das zweite Kapitel geebnet, bei dem wir auf den Fall mit zwei Prozessoren eingegangen sind. Auch hier wurde die Politikdefinition selbst erst auf die Problemstellung definiert, in dem nicht f"ur jeweils einen Prozessor eine seperate Politik definiert wurde, sondern durch intelligente Wahl der Einf"ugeregel wir uns wieder auf eine Politik beschr"anken konnten ohne dabei den optimalen Fall zu verlieren. Das Ergebnis hier war interessanter, eine Anordnung der Jobs nach absteigendem \(u_{j}\) war optimal, was einerseits bildlich anhand von Balkengrafiken gezeigt wurde, andererseits mit Hilfe von Induktion und der Ged"achtnislosigkeit bewiesen wurde.
+
+Im dritten Kapitel sind wir wieder auf den Fall mit einem Prozessor zur"uckgekehrt und haben den Fall mit begrenzter Zeit und entsprechender Entlohnung bei Fertigstellung des entsprechenden Jobs betrachtet. Hier ...
+TODO Beweisskizze
+Wir sind schlie"slich auf das u"berraschende Ergebnis gekommen, dass jeder ~~~ TODO
+
+Im vierten Kapitel haben wir zuerst versucht, das Ergebnis aus dem dritten Kapitel zu verwenden, ein Gegenbeispiel belehrte uns jedoch eines Besseren. Erst durch zus"atzliche Forderungen an die \(u_{j}\) konnten wir auf das Ergebnis kommen, dass
+TODO
 
 Man kann sich eine Vielzahl von weiteren Problemen der Art denken:
-Zwei Prozessoren hintereinander, zweimal zwei Prozessoren hintereinander parallelgeschaltet, Aenderung der Prozessorgeschwindigkeit w"ahrend des Verlaufs, Ausfall von Prozessoren usw. usw.
+Zwei Prozessoren hintereinander, zweimal zwei Prozessoren hintereinander parallelgeschaltet, "Anderung der Prozessorgeschwindigkeit w"ahrend des Verlaufs, Ausfall von Prozessoren usw.
+Legen wir mehr und mehr Nebenbedingungen hinzu wird es immer schwieriger eine optimale Politik zu beweisen. Leider sind wie immer die f"ur die Praxis relevanten Beispiele nicht trivial. "Ahnliche Anwendungen findet man in jedem Betrieb, bei der eine Menge von \emph{Jobs} an eine Menge von \emph{Prozessoren}, den Mitarbeitern, verteilt werden m"ussen. Hier kommen auch noch eine Reihe weiterer zus"atzliche Bedingungen herein, wie z.B. das Auf- und Abr"usten der Maschinen (= Prozessoren) f"ur bestimmte Art von Jobs, Lagerkosten von \emph{Jobs}, usw.
+Was man in diesen F"allen machen kann, ist wie Anfangs erw"ahnt zumindest erst einmal eine m"oglichst gute Politikdefinition zu finden
+Die eigentliche Optimierarbeit muss man dann aber zwangsl"aufig dem Computer mittels z.B. evolution"aren Algorithmen "uberlassen, die den vorher definierten Raum von Politiken absuchen.
 
-\newpage
-\section{Zusammenfassung}
+Hier ein Beispiel einer derartigen Software von SAP:
+
+<BILD SAP>
+
+Oder einem Softwaretool f"ur Strategiespiele:
+
+<BILD EF>
+
 
 \begin{thebibliography}{99}
 \bibitem{Ross} {\sc Sheldon M. Ross:}  \textit{Introduction to stochastic dynamic programming - Probabilityand mathematical statistics}, First edition, Academic Press, Inc., 1983
