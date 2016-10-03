@@ -12,7 +12,7 @@
 
 \textsc{Stochastic Scheduling} besch"aftigt sich mit Problemen, bei denen die Laufzeiten eines Jobs durch Zufallsvariablen dargestellt sind. Dadurch ist die tats"achliche Zeit vor Ende des Jobs unbekannt. Das 'Scheduling' ist je nach Problem auf ein oder mehrere Prozessoren und mit verschiedenartigen Nebenbedingungen best"uckt.
 
-Hier im Speziellen m"ochte ich auf vier F"alle aus diesem Bereich eingehen die mit der Abarbeitung von Jobs auf ein oder mehreren Prozessoren zu tun haben. Dabei ben"otigt jeder Job eine gewisse Zeit \(X_{j}\), die eine Exponentialverteilung besitzt. 
+Hier im Speziellen m"ochte ich auf vier F"alle aus diesem Bereich eingehen die mit der Abarbeitung von Jobs auf ein oder mehreren Prozessoren zu tun haben.
 
 \section{Fall: Ein Prozessor}
 
@@ -30,7 +30,6 @@ Im Weiteren werde ich folgende Definitionen und Voraussetzungen gebrauchen:
 \item Politik \begin{displaymath}\pi = (i_{1},i_{2},\ldots,i_{n})\end{displaymath} wobei \(i_{j}\) \(\neq\) \(i_{k}\) f"ur \(j \neq k\) und \(0<i_{j}\le n\) eine Jobnummer bezeichnet.
 \item \(X_{j}\) ist eine Zufallsvariable mit Exponentialverteilung mit Parameter \(\lambda_{j}\)
 \end{itemize}
-Im Weiteren gehen wir au"serdem davon aus, dass zum Zeitpunkt \emph{0} bereits ein Job \emph{0} auf dem Prozessor liegt.
 
 Die Gesamtzeit unserer Jobs ist dann nat"urlich die Summe aller Zeiten und somit von der Reihenfolge unabh"angig. Also ist es, wie man es erwartet h"atte, vollkommen egal, welche Politik man w"ahlt. F"ur die erwartete Gesamtzeit ergibt sich also:
 
@@ -149,7 +148,7 @@ Als n"achstes wird gezeigt, dass eine Politik die in aufsteigender Reihenfolge d
 \begin{displaymath}\pi = (0,2,1, i_{3}, i_{4},\ldots,i_{n})\end{displaymath} 
 \begin{displaymath}\bar \pi = (0, 1,2,i_{3}, i_{4},\ldots,i_{n})\end{displaymath} 
 Gelte au"serdem, dass \(\lambda_{1} = min_{k \ge 1}(\lambda_{k})\), dann gilt:
-\begin{displaymath}E_{\bar \pi}(D)\le E_{\pi}(D)\end{displaymath}.
+\begin{displaymath}E_{\bar \pi}(D)\le E_{\pi}(D)\end{displaymath}
 
 
 \textbf{Beweis:} Seien \(p_{j}\) und \(\bar p_{j}\), \(j \ge 0\) die zu \(\pi\) und \(\bar\pi\) geh"origen Wahrscheinlichkeiten, dass die letzte von den Prozessoren abgeschlossene Aufgabe Job \emph{j} ist, also z.B. Prozessor \emph{1} fertig ist und Prozessor \emph{2} noch an Aufgabe \emph{j} arbeitet und keine weiteren Jobs mehr in der Warteschlange/Politik liegen.
@@ -222,7 +221,7 @@ Wobei die Ungleichung aus \(\lambda_{1} = min_{k}(\lambda_{k})\) (\ref{e32}) fol
 \begin{displaymath}\pi = (0, i_{1}, i_{2},\ldots, i_{k-2}, i_{k}, i_{k-1}=1, i_{k+1},\ldots, i_{n})\end{displaymath}
 \begin{displaymath}\bar\pi  = (0,i_{1},i_{2},\ldots,i_{k-2},i_{k-1}=1,i_{k},i_{k+1},\ldots,i_{n})\end{displaymath}
 Gelte au"serdem, dass \(\lambda_{1} \le \lambda_{2} \le \ldots \le \lambda_{n}\), dann gilt:
-\begin{displaymath}E_{\bar \pi}(D)\le E_{\pi}(D)\end{displaymath}.
+\begin{displaymath}E_{\bar \pi}(D)\le E_{\pi}(D)\end{displaymath}
 
 \textbf{Beweis:} Da die Jobs hier wiederum unabh"angig voneinander sind, haben Job \emph{0} bis \(i_{k-2}\) keinen Einfluss auf die Nachfolgenden, wie auch \(i_{k-1}\) und \(i_{k}\) keinen Einfluss auf die Zeiten der nachfolgenden Jobs haben. Somit k"onnen alle abgeschlossenen Jobs \emph{0} bis \(i_{k-2}\) ignoriert und an der entsprechenden Stelle frisch angefangen werde. Dabei wird u.U. ein Job auf dem jeweils anderen Prozessor geschnitten. Dieser wird im Folgenden als Job \(\bar 0\) bezeichnet und besitzt aufgrund der Ged"achtnislosigkeit genau die Verteilung des unterbrochenen Jobs.
 Dadurch ergeben sich zwei neue Politiken:
@@ -286,11 +285,11 @@ Es sieht nun so aus, als ob wir hier wie im vorherigen Kapitel, die optimale Pol
 
 Dies ist hier aber nicht unbedingt der Fall. Im zweiten Kapitel haben wir festgestellt, dass die optimale Reihenfolge eine der aufsteigenden \(\lambda_{j}\) ist, also lange Jobs m"oglichst zu Beginn gesetzt werden. Ein kleines Gegenbeispiel soll dies verdeutlichen:
 
-\begin{displaymath}\lambda_{j}R_{j} \equiv 1 \textnormal{f"ur alle \emph{j} und} \lambda_{1} < \lambda_{2} < \cdots < \lambda_{n}\end{displaymath}.
+\begin{displaymath}\lambda_{j}R_{j} \equiv 1 \textnormal{f"ur alle \emph{j} und} \lambda_{1} < \lambda_{2} < \cdots < \lambda_{n}\end{displaymath}
 
 Es w"urde folgen, dass, da ja alle \(\lambda_{j}\)\(R_{j}\) gleich gro"s sind, jede beliebige Reihenfolge optimal ist. Dieses Ergebnis w"urde im Fall mit nur einem Prozessor auch stimmen, bei zwei Prozessoren tritt jedoch wie im zweiten Kapitel gezeigt eine immer gr"o"sere Idle Zeit auf, wenn wir die Jobs absteigend nach den \(\lambda_{j}\) (bzw. aufsteigend nach den ben"otigten Zeiten) sortieren.
 
-Man kann jedoch zeigen (worauf hier aber nicht weiter eingegangen werden kann), dass wie im Fall ohne Priorit"aten eine aufsteigende Reihenfolge optimal ist, wenn wir gewisse Bedingungen voraussetzen. Dabei sollen die \(\lambda_{j}\) wie vorher auch aufsteigend geordnet sein und \(\lambda{j}R_{j}\) absteigend, also lange Jobs mit hohen Gewinnen zu Beginn stehen sollen.
+Man kann jedoch zeigen (worauf hier aber nicht weiter eingegangen werden kann), dass wie im Fall ohne Priorit"aten eine aufsteigende Reihenfolge optimal ist, wenn wir gewisse Bedingungen voraussetzen. Dabei sollen die \(\lambda_{j}\) wieder aufsteigend geordnet sein und \(\lambda{j}R_{j}\) absteigend, also lange Jobs mit hohen Gewinnen zu Beginn stehen sollen.
 
 \textbf{Satz 3:}
 \begin{displaymath}\textnormal{Sei }\lambda_{1} \le \lambda_{2} \le \cdots \le \lambda_{n}\end{displaymath} 

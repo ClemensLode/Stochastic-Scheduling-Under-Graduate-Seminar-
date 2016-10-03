@@ -1,0 +1,95 @@
+\documentclass[a4paper]{report}
+\usepackage[ngerman]{babel}
+\usepackage[latin1]{inputenc}
+\usepackage{dsfont}
+\usepackage{amsfonts}
+\begin{document}
+
+\textbf{Einleitung}
+
+\textsc{Stochastic Scheduling} besch"aftigt sich mit Problemen, bei denen die Laufzeiten eines Jobs durch Zufallsvariablen dargestellt sind. Dadurch ist die tats"achliche Zeit vor Ende des Jobs unbekannt. Das 'Scheduling' ist je nach Problem auf ein oder mehrere Prozessoren und mit verschiedenartigen Nebenbedingungen best"uckt.
+
+\textbf{Fall: Ein Prozessor}
+
+\begin{itemize}
+\item \emph{n} Jobs auszuf"uhren, ein Job ist eine beliebige Aufgabe die ein Prozessor berechnen kann, wobei die Jobs nicht gleich sein m"ussen
+\item Ein einzelnen Prozessor, zu jeder Zeit maximal ein Job 
+\item Fragestellung: Welche Reihenfolge minimiert Zeit um alle Jobs auszuf"uhren?
+\item Was ist Gesamtzeit? In der Realit"at sehr komplex \(\Rightarrow\) Vereinfachung: alle Jobs unabh"angig voneinander
+\item M: ben"otigte Gesamtzeit zur Abarbeitung aller Jobs
+\item Politik \(\pi = (i_{1},i_{2},\ldots,i_{n}),\qquad i_{j} \neq i_{k} \textnormal{ f"ur } j \neq k, 0<i_{j}\le n\) Jobnummer
+\item \(X_{j}\) Zufallsvariable mit \emph{Exponentialverteilung} mit Parameter \(\lambda_{j}\)
+\item \(E(M) = E(X_{i_{1}})+E(X_{i_{2}})+\cdots+E(X_{i_{n}}) = \sum_{j=1}^{n} E(X_{j})\)
+\end{itemize}
+
+
+\textbf{Fall: Zwei Prozessoren parallel}
+
+\begin{itemize}
+\item Fall wie oben, Unterschied: Zwei identische Prozessoren
+\item Erster Ansatz: Weise jedem Job einen Startzeitpunkt und Prozessor zu
+\item Problem: kann nicht optimal sein wegen Idle-Zeiten
+\item Benutzung von Expertenwissen: Entscheidung welcher Job einzuf"ugen ist kann w"ahrend der Abarbeitung getroffen werden
+\item \(\Rightarrow\) Regel: F"uge Job ein sobald ein Prozessor unbesch"aftigt, \((n+1)!\) verschiedene Politiken
+\item Minimierung der Zielfunktion \(E_{\pi}(M) = \frac{E_{\pi}(D) + c}{2}\) durch Minimierung von \emph{D}
+\item Weglassen der Zuweisung zu einem Prozessor durch Verfeinerung der Regel f"uhrt zu \(n!\) M"oglichkeiten
+\item Aufgabe aber noch nicht gel"ost, da z.B. absteigende Reihenfolge von \(\lambda_{i}\) zu Maximierung von \emph{D} f"uhrt
+\item Vergleich zweier "ahnlicher Politiken (Job \emph{1} und \emph{2} vertauscht), Job \emph{0} erster Job
+\item L"angerer Beweis "uber Induktion durch Betrachtung von \(p_{1}\) und den Fall mit \((n-1)\) Jobs, siehe Ausarbeitung
+\item Beweis, dass Lemma 1 auch bei Vertauschung von Job \emph{1} und Job \(i_{2}\) stimmt
+\item Beweis, dass Lemma 1 auch an beliebigen Stellen und beliebigen Jobs stimmt, sofern Job kleinstes \(\lambda\) besitzt
+\item Wiederholtes Anwenden f"uhrt zu Satz 1
+\end{itemize}
+
+
+\textbf{Lemma 1:} Seien zwei Politiken \(\pi\) und \(\bar \pi\) gegeben:
+\begin{displaymath}\pi = (0,2,1, i_{3}, i_{4},\ldots,i_{n}) \qquad \bar \pi = (0, 1,2,i_{3}, i_{4},\ldots,i_{n})\end{displaymath} 
+Gelte au"serdem, dass \(\lambda_{1} = min_{k \ge 1}(\lambda_{k})\), dann gilt \(E_{\bar \pi}(D)\le E_{\pi}(D)\)
+
+
+\textbf{Korollar 1:} \emph{Lemma 1} gilt auch f"ur beliebige Politiken der Form \(\pi = (0, 1, i_{2}, i_{3}, \ldots, i_{n})\) und \(\bar \pi = (0, i_{2}, 1, i_{3} \ldots, i_{n})\) mit \(\lambda_{i_{2}} \ge \lambda_{1}\).
+
+
+\textbf{Lemma 2:} Seien zwei Politiken \(\pi\) und \(\bar \pi\) gegeben:
+\begin{displaymath}\pi = (0, i_{1}, i_{2},\ldots, i_{k-2}, i_{k}, i_{k-1}=1, i_{k+1},\ldots, i_{n}) \qquad \bar\pi  = (0,i_{1},i_{2},\ldots,i_{k-2},i_{k-1}=1,i_{k},i_{k+1},\ldots,i_{n})\end{displaymath}
+Gelte au"serdem, dass \(\lambda_{1} \le \lambda_{2} \le \ldots \le \lambda_{n}\), dann gilt:
+\begin{displaymath}E_{\bar \pi}(D)\le E_{\pi}(D)\end{displaymath}
+
+
+\textbf{Korollar 2:} \emph{Lemma 2} gilt auch f"ur beliebige Jobs \emph{j} sofern alle \(\lambda_{i_{k}} \ge \lambda_{j}\) mit \(i_{k} > j\), der Job \emph{j} also genau der Job mit der niedrigsten Nummer aller Jobs \( \ge j\) ist.
+
+
+\textbf{Satz 1:} Eine aufsteigend sortierte Politik \(\pi = (0,1,2,\ldots,n)\) ist die optimale Politik um den Erwartungswert f"ur \emph{D} zu minimieren, falls \(\lambda_{1} \le \lambda_{2} \le \ldots \le \lambda_{n}\) gilt.
+
+
+\textbf{Ein Prozessor mit begrenzter Zeit}
+
+\begin{itemize}
+\item Wie oben mit Unterschied 1 Prozessor, jeder Job erziehlt einen Gewinn und Gesamtzeit ist begrenzt
+\item Ziel: Maximiere \(E_{\pi} (\textnormal{Gesamtgewinn}) = \sum_{j=0}^{n} \lambda_{j} R_{j} E_{\pi}(\textnormal{Zeit die Job \emph{j} bearbeitet wurde})\)
+\end{itemize}
+
+
+\textbf{Satz 2:} Der Gesamtgewinn bei gegebener Zeit \emph{T} wird maximiert, wenn eine Politik gew"ahlt wird, die die Jobs in einer absteigenden Folge von \(\lambda_{j} R_{j}\) f"ur \(j=1,\ldots,n\) sortiert.
+
+
+\textbf{Zwei Prozessoren mit begrenzter Zeit}
+\begin{itemize}
+\item Fragestellung: Kombination aus Teil 2 und 3 (2 Prozessoren, Gesamtgewinn wie in 3), aber welche Reihenfolge optimal?
+\item Ergebnis: Nicht wie in Teil 3, Gegenbeispiel \(\lambda_{j}R_{j} \equiv 1 \textnormal{f"ur alle \emph{j} und} \lambda_{1} < \lambda_{2} < \cdots < \lambda_{n}\) \(\Rightarrow\) absteigende Folge von \(\lambda_{j}R_{j}\) minimiert nicht
+\item Aber: Unter etwas anderen Voraussetzung minimiert aufsteigende Folge von Jobs \(1, 2, \ldots, n\) die Zeit
+\end{itemize}
+
+
+\textbf{Satz 3:}
+\begin{displaymath}\textnormal{Sei }\lambda_{1} \le \lambda_{2} \le \cdots \le \lambda_{n}\end{displaymath} 
+\begin{displaymath}\textnormal{und }\lambda_{1}R_{1} \ge \lambda_{2}R_{2} \ge \cdots \ge \lambda_{n}R_{n} \ge 0\end{displaymath}
+dann ist die Reihenfolge \((1, 2, \ldots, n)\) optimal und maximiert den zu erwartenden Gesamtgewinn f"ur Zeit \(t>0\).
+
+
+\textbf{Ausblick und Zusammenfassung}
+
+Insgesamt: Aufstellen einer guten Form von Politik wichtig, Finden einer optimalen L"osung ohne starke Voraussetzungen sehr schwierig
+Bei realen Problemen liegt das Hauptaugenmerk auf das Aufstellen einer Politik, gel"ost wird es meist mit probabalistischen Verfahren, die den durch die Politiken gegebenen Raum durchsuchen.
+\end{document}
+
