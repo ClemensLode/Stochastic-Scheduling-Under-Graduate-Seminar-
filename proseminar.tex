@@ -71,12 +71,14 @@ BILD
 
 Dies reduziert unseren Zahl unterschiedlicher Politiken auf \textbf{n!} und erleichtert die folgenden Beweise, da wir nur noch Politiken haben, die aus \emph{einer} anstatt zwei Reihen von Aufgaben bestehen. Wir k"onnen uns nun dem eigentlichen Problem widmen:
 
-Die Frage ist nun zuerst, ob durch unsere Regel das Problem nicht schon gel"ost wurde. Wenn wir immer eine Aufgabe auf den Prozessor legen, der nicht besch"aftigt ist, gleichen wir bei jedem Schritt beide Balken aus. Erreichen wir dadurch das optimale Gleichgewicht? Nein. Dies w"urde der Fall sein, wenn alle Aufgaben gleiche Zeit ben"otigten und eine gerade Anzahl Aufgaben vorliegt. Legen wir aber beispielsweise die Aufgaben mit aufsteigenden Werten auf die Prozessoren, schwankt der Unterschied zwischen beiden bei jedem Schritt mehr, 
+Die Frage ist nun zuerst, ob durch unsere Regel das Problem nicht schon gel"ost wurde. Wenn wir immer eine Aufgabe auf den Prozessor legen, der nicht besch"aftigt ist, gleichen wir bei jedem Schritt beide Balken aus. Erreichen wir dadurch das optimale Gleichgewicht? Nein. Dies w"urde der Fall sein, wenn alle Aufgaben gleiche Zeit ben"otigten und eine gerade Anzahl Aufgaben vorliegt. Legen wir aber beispielsweise die Aufgaben mit aufsteigenden Zeiten auf die Prozessoren, schwankt der Unterschied zwischen beiden bei jedem Schritt mehr, 
 	
-\begin{displaymath}\sum_{2i+1}^{n} a_{i} = \sum_{2i+2}^{n} a_{i}, \sum_{2i+1}^{n} b_{i} = \sum_{2i}^{n} b_{i}, a_{2i+2} = 2i+1, b_{2i} = 2i\end{displaymath}
-%\begin{displaymath}\Rightarrow \sum_{i=0}^{n} a_{i} - \sum_{i=0}^{n} b_{i} = \sum_(2i+1) a_i - SUM_(2i+1) b_i + SUM_(2i+2) a_i - SUM_(2i+2) b_i = SUM_(2i+1) (2i+1 - 2i) + SUM_(2i+2) (2i+1 - 2i+2) = (2i+1) + (-2i+2) = 1.\end{displaymath} 
-%TODO!!!
-%!!!!!!!!!!!!!!!!!!
+\begin{displaymath}\sum_{i=0}^{\frac{n}{2}-1} a_{2i+1} = \sum_{i=0}^{\frac{n}{2}-1} a_{2i+2},\qquad \sum_{i=0}^{\frac{n}{2}-1} b_{2i+1} = \sum_{i}^{\frac{n}{2}-1} b_{2i}, a_{2i+2} = 2i+1, b_{2i} = 2i\end{displaymath}
+\begin{displaymath}\Rightarrow \sum_{i=0}^{n} a_{i} - \sum_{i=0}^{n} b_{i} = \sum_{i=0}^{\frac{n}{2}-1} a_{2i+1} - \sum_{i=0}^{\frac{n}{2}-1} b_{2i+1} + \sum_{i=0}^{\frac{n}{2}-1} a_{2i+2} - \sum_{i=0}^{\frac{n}{2}-1} b_{2i+2}\end{displaymath} \begin{displaymath}= \sum_{i=0}^{\frac{n}{2}-1} (2i+1 - 2i) + \sum_{i=0}^{\frac{n}{2}-1} (2i+1 - 2i+2) = (2i+1) + (-2i+2) = 1.\end{displaymath} 
+
+TODO RECHUNG UEBERPRUEFEN ODER GANZ RAUSTUN, TOTAL FALSCH :/
+
+
 \begin{tabular}{|r|ccc|}
 \hline
 Schritt & Idle-Zeit & 1. Prozessor & 2. Prozessor \\
@@ -107,13 +109,13 @@ Investiert man in die Aufgabe etwas Denkarbeit wird auch klar, dass wohl die opt
 
 Das ganze nochmal formal aufgeschrieben und bewiesen, und schon sind wir mit dem ersten Teil fertig:
 
-Seien 2 identische Prozessoren gegeben um n Aufgaben abzuarbeiten. Beide laufen unabh"angig, k"onnen also jede Aufgabe zu jeder Zeit in einer beliebigen Reihenfolge bearbeiten. Startzeit ist t = 0.
-Sei \(X_{j}\) die Zeit um Aufgabe j zu bearbeiten und sei diese exponential verteilt mit \begin{displaymath}\lambda_{j} = u_{j}, j=1,\ldots,n\end{displaymath}.
-Eine Politik ist eine Permutation \begin{displaymath}i_{1},\ldots,i_{n} = 1,2,\ldots,n\end{displaymath} wie die Aufgaben der Reihe nach angeordnet sind. Die gesamte Zeit bis alle Aufgaben erf"ullt sind wird 'makespan' genannt und das Ziel ist, die makespan zu minimieren. TODO SCHON OBEN GESCHRIEBEN
+Seien 2 identische Prozessoren gegeben um n Aufgaben abzuarbeiten. Beide laufen unabh"angig, k"onnen also jede Aufgabe zu jeder Zeit in einer beliebigen Reihenfolge bearbeiten. Startzeit ist t = 0. Sei im weiteren Verlauf zum Zeitpunkt 0 ein Job 0 bereits im Prozessor, d.h. starte jede Politik mit Job 0 (dies macht den Beweis etwas klarer).
+Sei au"serdem \(X_{j}\) die Zeit um Aufgabe j zu bearbeiten und sei diese exponential verteilt mit \begin{displaymath}\lambda_{j} = u_{j}, j=1,\ldots,n\end{displaymath}.
+Eine Politik ist eine Permutation \begin{displaymath}i_{1},\ldots,i_{n} = 1,2,\ldots,n\end{displaymath} wie die Aufgaben der Reihe nach angeordnet sind. Die gesamte Zeit bis alle Aufgaben erf"ullt sind wird 'makespan' genannt und das Ziel ist, die makespan zu minimieren. 
+TODO SCHON OBEN GESCHRIEBEN?
 
 F"ur jede Politik \begin{displaymath}\pi = (0,i_{1},\ldots, i_{n})\end{displaymath} ist jeweils M  die Makespan und D die Zeit die einer der Prozessoren stillsteht. Somit ist zum Zeitpunkt M - D einer der Prozessoren fertig und keine weiteren Auftr"age mehr in der Warteschlange und M + M - D die Summe aller Zeiten, also \(\sum_{j=0}^n X_{j}\)
 
-TODO Job 0 erster Job in der Schlange
 
 Also gilt: \(2M - D - \sum_{j=0}^{n} X_{j} = 0\)
 
@@ -132,8 +134,7 @@ Da nach Voraussetzung \(X_{j}\) von der Reihenfolge, also der Politik \(\pi\) ni
 Also ergibt sich nun auch formal, dass durch Minimierung der erwarteten Differenz D in der einer der Pr"ozessoren unbesch"aftigt ist, auch die Makespan minimiert wird.
 
 
-Als n"achstes zeige ich, dass eine Politik die in aufsteigender Reihenfolge der \(u_{i}\) (also der aufsteigend Zeiten TODO PRUEFEN) angeordnet ist, optimal ist.
-Dies wird wie folgt induktiv bewiesen:
+Als n"achstes wird gezeigt, dass eine Politik die in aufsteigender Reihenfolge der \(u_{i}\) (also der absteigenden Zeiten) angeordnet ist, optimal ist. Dazu betrachten wir zwei nahezu gleiche Politiken, bei der Job 1 und Job 2 miteinander vertauscht sind und beweisen dann induktiv:
 
 \textbf{Lemma 1:} Seien zwei Politiken \(\pi\) und \(\bar \pi\) gegeben:
 \begin{displaymath}\pi = (0,2,1,3,\ldots,n)\end{displaymath} 
@@ -141,9 +142,6 @@ Dies wird wie folgt induktiv bewiesen:
 Gelte au"serdem, dass \(u_{1} = min(u_{k \ge 1})\) dann gilt:
 \begin{displaymath}E_{\bar \pi}(D)\le E_{\pi}(D)\end{displaymath}.
 
-
-
-Die Idee ist also, eine einzelne Transposition durchzuf"uhren und dann zu beweisen, dass sich dadurch \(E_{\pi}\)(D) erh"oht. ???? TODO CHECK
 
 \textbf{Beweis:} Seien \(\pi_{j}\) und \(\bar\pi_{j}\), j \(\ge\) 0 die zu \(\pi\) und \(\bar\pi\) geh"origen Wahrscheinlichkeiten, dass die letzte von den Prozessoren abgeschlossene Aufgabe Job j ist, also z.B. Prozessor A fertig ist und Prozessor B noch an Aufgabe j arbeitet und keine weiteren Aufgaben mehr in der Warteschlange/Politik liegen.
 
@@ -186,11 +184,8 @@ Es folgt also, dass \(\bar\pi \ge \pi\) und somit (\ref{e32}) gilt und wir das L
 
 \subsection{Beweis fuer beliebige Politiken}
 
-Wir haben jetzt also per Induktion gezeigt, dass der Erwartungswert der Zeit in der ein Prozessor still steht bei Politik (0,2,1,3,\ldots,n) mindestens so gro"s ist wie bei (0,1,2,3,\ldots,n), falls \(u_{1}\) = min(\(u_{k \ge 1}\).
+Wir haben jetzt also per Induktion gezeigt, dass der Erwartungswert der Zeit in der ein Prozessor still steht bei Politik (0,2,1,3,\ldots,n) mindestens so gro"s ist wie bei (0,1,2,3,\ldots,n), falls \(u_{1}\) = min(\(u_{k \ge 1}\). Mit dieser Grundlage k"onnen wir nun zus"atzlich zeigen, dass \((0,1,2,\ldots,n)\) die optimale Politik ist um den Erwartungswert f"ur D zu minimieren.
 
-Mit dieser Grundlage k"onnen wir nun zus"atzlich zeigen, dass \((0,1,2,\ldots,n)\) die optimale Politik ist um den Erwartungswert f"ur D zu minimieren.
-
-TODO Satzbezeichnung
 \textbf{Also:} Sei wieder \begin{equation}\label{asdf}u_{1} \le u_{2} \le \ldots \le u_{n}\end{equation} 
 
 Nehmen wir also eine neue Politik her, die nicht mit (0,1,...) beginnt, dann k"onnen wir mit dem bewiesenen Satz 3.1~~~~ direkt folgern, dass diese neue Politik mehr Zeit ben"otigt als die alte. Wenn wir jetzt noch zeigen k"onnten, dass wenn Job 1 an einer beliebigen anderen Stelle k steht, die Politik besser w"are bei der die Stellen k und k-1 vertauscht sind, h"atten wir die Behauptung bewiesen:
@@ -212,6 +207,7 @@ Das Spielchen kann nun mit 2, 3 usw. wiederholt werden, bis alle Jobs in aufstei
 Zu Betonen ist hierbei, dass man dies, wie bereits erw"ahnt, in aufsteigender Reihenfolge durchf"uhrt, da ein solches Vertauschen eines Niederwertigen durch ein H"oherwertigen nicht grunds"atzlich von Vorteil ist. Bei jedem Schritt muss nicht nur \(u_{j} \le u_{k}\) gelten, \(u_{j}\) muss auch das kleinste Element, abgesehen von \(u_{j-1}\), \(u_{j-2}\) etc. die ja schon nach vorne geschoben wurden, sein, also \(u_{j} \le\) min(\(u_{j+1},\ldots,u_{n})\).
 
 Das w"are es eigentlich fast schon zum zweiten Punkt dieses Vortrags. Ich m"ochte jedoch noch einmal kurz auf die anfangs erw"ahnten Politiken eingehen, die man durch geschicktes W"ahlen der Form der Politik und der Einf"ugeregel wegfallen hat lassen.
+
 TODO raus bei Textversion
 
 \newpage
@@ -236,7 +232,7 @@ Es sieht nun so aus, als ob wir hier wie in 2.1, der Fall bei dem wir nur ein Pr
 
 Dies ist aber nicht der Fall wie ein kleines Gegenbeispiel zeigt:
 
-\(u_{j}\)\(R_{j}\) == 1 f"ur alle j und \begin{displaymath}u_{1} < u_{2} < \cdots < u_{n}\end{displaymath}.
+\(u_{j}\)\(R_{j} \equiv 1\) f"ur alle j und \begin{displaymath}u_{1} < u_{2} < \cdots < u_{n}\end{displaymath}.
 
 Es w"urde folgen, dass, da ja alle \(u_{j}\)\(R_{j}\) gleich gro"s sind, jede beliebige Reihenfolge optimal ist. Dies stimmt auch im Fall von einem Prozessor, bei zwei Prozessoren tritt jedoch wie anfangs besprochen eine immer gr"o"sere Idle Zeit auf, wenn wir die Jobs absteigend nach den \(u_{j}\) (bzw. aufsteigend nach den ben"otigten Zeiten) sortieren.
 
@@ -260,7 +256,7 @@ Insgesamt hat dieser Vortrag zeigen k"onnen, wie man sich Schritt f"ur Schritt a
 
 In den ersten zwei Kapiteln wurde neben einigen Definitionen vor allem auf die Herangehensweise wert gelegt, wie also eine Politik zu definieren ist. Au"serdem wurde gezeigt, dass es f"ur das jeweilige Problem unterschiedlich gut angepasste Politiken gibt. Hier wurde ein Vergleich der Politik 'Setze Jobs an bestimmten Zeiten' und der Politik 'Setze Jobs sobald der Prozessor frei wird' aufgestellt, der gezeigt hat, dass durch Einbringen von genauer Kenntnis des Problems die Politik wesentlich vereinfacht werden konnte, ohne dass der optimale Fall verloren geht.
 
-Im ersten Kapitel wurde auf den Problemfall mit einem einzelnen Prozessor eingegangen. Mit korrekter Politikdefinition lie"s sich das Problem relativ trivial l"osen, alle Politiken waren optimal, da \(E(sum_{j=0}^{n} X_{i_{j}})\) von der Anordnung der Jobs \(i_{j}\) unabh"angig war. 
+Im ersten Kapitel wurde auf den Problemfall mit einem einzelnen Prozessor eingegangen. Mit korrekter Politikdefinition lie"s sich das Problem relativ trivial l"osen, alle Politiken waren optimal, da \(E(\sum_{j=0}^{n} X_{i_{j}})\) von der Anordnung der Jobs \(i_{j}\) unabh"angig war. 
 			
 Das Kapitel hat den Weg fuer das zweite Kapitel geebnet, bei dem wir auf den Fall mit zwei Prozessoren eingegangen sind. Auch hier wurde die Politikdefinition selbst erst auf die Problemstellung definiert, in dem nicht f"ur jeweils einen Prozessor eine seperate Politik definiert wurde, sondern durch intelligente Wahl der Einf"ugeregel wir uns wieder auf eine Politik beschr"anken konnten ohne dabei den optimalen Fall zu verlieren. Das Ergebnis hier war interessanter, eine Anordnung der Jobs nach absteigendem \(u_{j}\) war optimal, was einerseits bildlich anhand von Balkengrafiken gezeigt wurde, andererseits mit Hilfe von Induktion und der Ged"achtnislosigkeit bewiesen wurde.
 
